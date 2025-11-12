@@ -36,6 +36,7 @@ export async function carregarSelectMultiplo({
     const resp = await fetch(url);
     if (!resp.ok) throw new Error(`Falha na resposta de ${url}`);
     const dados = await resp.json();
+    console.log('Retorno select multiplo');
     console.log(dados);
 
     const el = document.getElementById(selectId);

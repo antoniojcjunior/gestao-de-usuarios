@@ -10,10 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const isLocal = process.env.DATABASE_URL?.includes('localhost') || process.env.NODE_ENV === 'development';
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-  //client_encoding: 'UTF8'
+  ssl: isLocal ? false : { rejectUnauthorized: false },
 });
 
 // POST /api/usuarios
