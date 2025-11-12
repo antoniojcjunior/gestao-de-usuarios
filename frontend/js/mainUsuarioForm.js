@@ -6,7 +6,7 @@ import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from 
 import { getUsuarioPorId } from './api/usuariosApi.js';
 
 const API_BASE = window.location.origin.includes('vercel.app')
-  ? '' // produção: chama via rewrite (/api/...)
+  ? '' // produção: chama via rewrite VERCEL.JSON (/api/...)
   : 'http://localhost:3000'; // desenvolvimento local
 
 //document.getElementById('enviar').addEventListener('click', incluirUsuario);
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   limitaDataNascimento();
   carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor' });
   carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' });
-  carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turnos', labelCampo: 'turnos' });
+  carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turno', labelCampo: 'turno' });
 });
 
 // Listener dos botões
