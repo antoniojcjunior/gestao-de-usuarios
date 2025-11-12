@@ -12,8 +12,8 @@ app.use(express.json());
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { require: true, rejectUnauthorized: false },
-  client_encoding: 'UTF8'
+  ssl: { rejectUnauthorized: false },
+  //client_encoding: 'UTF8'
 });
 
 // POST /api/usuarios
