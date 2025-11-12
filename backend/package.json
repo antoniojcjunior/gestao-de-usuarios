@@ -1,6 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
+  "type": "module",
   "description": "Back-end do projeto Gestão de Usuários",
   "main": "server.js",
   "scripts": {
