@@ -15,7 +15,6 @@ const pool = new Pool({
   ssl: { require: true, rejectUnauthorized: false },
   client_encoding: 'UTF8'
 });
-console.log(process.env.DATABASE_URL);
 
 // POST /api/usuarios
 app.post('/api/usuarios', async (req, res) => {
