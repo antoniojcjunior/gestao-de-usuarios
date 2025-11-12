@@ -5,6 +5,9 @@ import { carregarSelect } from './utils/carregarSelect.js';
 import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from './utils/util.js';
 import { getUsuarioPorId } from './api/usuariosApi.js';
 
+const API_BASE = window.location.origin.includes('vercel.app')
+  ? '' // produção: chama via rewrite (/api/...)
+  : 'http://localhost:3000'; // desenvolvimento local
 
 //document.getElementById('enviar').addEventListener('click', incluirUsuario);
 document.getElementById('formulario').addEventListener('submit', async (e) => {
@@ -18,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
   aplicarMascaraMonetaria();
   preencherUFs();
   limitaDataNascimento();
-  carregarSelect({ url: 'http://localhost:3000/api/setores', selectId: 'setor' });
-  carregarSelect({ url: 'http://localhost:3000/api/regioes', selectId: 'regiao' });
-  carregarSelect({ url: 'http://localhost:3000/api/turnos', selectId: 'turno', labelCampo: 'turno' });
+  carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor' });
+  carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' });
+  carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turnos', labelCampo: 'turnos' });
 });
 
 // Listener dos botões
