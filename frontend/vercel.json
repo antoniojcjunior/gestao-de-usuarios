@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/regioes",
+      "destination": "https://gestao-de-usuarios-rxgo.onrender.com/api/regioes"
+    }
+  ]
+}
