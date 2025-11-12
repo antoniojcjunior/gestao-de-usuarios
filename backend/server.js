@@ -148,7 +148,7 @@ app.get('/api/usuarios/:id', async (req, res) => {
 
 // listar usuários
 app.get('/api/usuarios', async (req, res) => {
-
+  console.log('Consulta servidor realizada'); // Log no backend
   // 1. Obtém o CPF da query string (ex: /api/usuarios?cpf=12345678900)
     const cpfFiltro = req.query.cpf;
     const regiaoFiltro = req.query.regiao;
