@@ -1,0 +1,38 @@
+
+section.card {
+    /* background-color: #eaf0ff; */
+    background-color: #f2f4f7;
+    /* background-color: #ebedef; */
+}
+
+#resultados-tabela:empty {
+    /* Remove a ocupação de espaço quando a section não tem conteúdo */
+    display: none; 
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;    /* controla o espaço entre ícones */
+}
+.icon {
+  width: 18px;
+  height: 18px;
+  color: #6c757d; /* cor padrão Bootstrap para ícones */
+}
+.icon:hover {
+  color: #dc3545; /* vermelho no hover, opcional */
+}
+
+.btn-deletar,
+.btn-editar {
+  border: none;
+  background: transparent;
+}
+
+.caption-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

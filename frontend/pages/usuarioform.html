@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="titulo-page">Formulário Simples</title>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govbr-ds/core/dist/core.min.css"> -->
+  <link rel="stylesheet" href="../css/stylesBoot.css">
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+  crossorigin="anonymous"
+/>
+</head>
+
+<body class="bg-light">
+  <header class="navbar bg-body-tertiary shadow-sm mb-4">
+    <div class="container-fluid d-flex justify-content-start">
+    <img src="../img/tecnologia_mobile.png" alt="Logo Gestão de Usuários" 
+      class="me-2 rounded img-fluid" style="max-width: 40px; height: auto;">    
+    <span class="navbar-brand mb-0 h5 fw-semibold text-secondary">Gestão de Usuários</span>
+    </div>
+  </header>
+<!-- <header class="mb-4 mt-4 px-5 text-left">
+  <h1 class="h2 fw-semibold text-secondary">Incluir Usuário</h1>
+</header> -->
+  <main>
+  <div class="container-fluid px-5 py-3">
+    <section class="card shadow-sm p-4">
+      <h1 id="titulo-form" class="h4 fw-semibold text-secondary">Incluir Usuário</h1>
+      <form id="formulario">
+        <div class="row primeira mt-3 mb-3">
+          <div class="col">    <!-- Pai do Label + caixa de texto -->
+            <label class="form-label" for="nome">Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" data-obrigatorio>
+          </div>
+        </div>
+        <div class="row segunda mb-3 gy-3 justify-content-between">
+          <div class="col-md-3">
+            <label class="form-label" for="cpf">CPF:</label>
+            <input class="form-control" type="text" id="cpf" name="cpf"
+                placeholder="Digite o CPF"
+                inputmode="numeric"
+                maxlength="14"
+                autocomplete="off"
+                data-obrigatorio>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label" for="data_nascimento">Data de Nascimento:</label>
+            <input class="form-control"
+              type="date"
+              id="data_nascimento"
+              name="data_nascimento" />
+              <!-- max="2025-12-31"  Será definido via script para pegar sempre hoje-->
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="regiao">Região de Residencia:</label>
+            <select id="regiao" class="form-select" name="regiao" data-placeholder="Selecione a região">
+              <option value="" disabled selected>Selecione a região</option>
+              <!-- <option value="">-- Escolha uma opção --</option> -->
+            </select>
+          </div>
+          <!-- <div class="col-md-1">
+            <label class="form-label" for="uf">UF:</label>
+            <select id="uf"  class="form-select" data-placeholder="UF">
+              <option value="" disabled selected>UF</option>
+            </select>
+          </div> -->
+        </div>
+        <div class="row terceira mb-3 gy-3">
+          <div class="col-md-6">
+            <label class="form-label" for="setor">Setor onde atua na empresa:</label>
+            <select id="setor" class="form-select" name="setor" data-placeholder="Selecione o setor">
+              <option value="" disabled selected>Selecione o setor</option>
+              <!-- <option value="" disabled selected>Selecione</option>  Foi apagada pois está sendo inserida pelo JS -->
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="turno">Turno:</label>
+            <select id="turno" class="form-select" name="turno" data-placeholder="Selecione o turno">
+              <option value="" disabled selected>Selecione o turno</option>
+              <!-- <option value="" disabled selected>Selecione</option>  Foi apagada pois está sendo inserida pelo JS -->
+            </select>
+          </div>
+        </div>
+        <div class="row quarta mb-3 gy-3">
+          <div class="col-md-2">
+            <label class="form-label" for="remuneracao">Remuneracao:</label>
+            <input class="form-control"
+              type="text" 
+              id="remuneracao" 
+              name="remuneracao"
+              placeholder="0.00">
+          </div>
+        </div>
+      
+        <div class="d-flex justify-content-end gap-3 pt-3">
+          <button id="enviar" class="btn btn-primary" type="submit">Enviar</button>
+          <button id="limpar" class="btn btn-secondary" type="button">Limpar</button>
+          <button id="voltar" class="btn btn-secondary" type="button">Voltar</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+<footer class="bg-secondary-subtle text-dark py-4 mt-5">
+  <div class="container text-center">
+    <h6 class="fw-semibold mb-2">DSC Technologies</h6>
+    <p class="mb-1 text-muted small">
+      Soluções inteligentes em software, dados e automação corporativa.
+    </p>
+
+    <p class="text-muted small mb-0">
+      © 2025 DSC Technologies • Todos os direitos reservados
+    </p>
+  </div>
+</footer>
+
+<!-- biblioteca de máscaras de campos -->
+<script
+  defer src="https://unpkg.com/vanilla-masker@1.1.1/build/vanilla-masker.min.js"
+  integrity="sha384-12XSlvcHmo+GznHloktY+lT6qPgXYbPqMFGiY0JflahmzOxYAkfrK+YzvoBAH+qQ"
+  crossorigin="anonymous">
+</script>
+<script defer type="module" src="../js/mainUsuarioForm.js"></script>
+</body>
+</html>

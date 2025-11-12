@@ -1,0 +1,396 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.erro { border: 2px solid red !important; box-shadow: 0 0 4px rgba(255,0,0,.35); }
+
+/* Corpo centralizado */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;/*alinha os filhos verticalmente se ROW, se COLUMN alinha Horiz*/
+  justify-content: flex-start; /*alinha os filhos verticalmente se COLUMN, se ROW alinha Horiz*/
+  padding: 5px 30px; /* respiro (espaço entre borda do elemento e seu filho VxH) Se informa só 1 valor aplica aos 4 lados
+                  separa o main da borda do body
+                  faz sentido se eu alinhar a esquerda e quiser dar um espaço*/
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+  gap: 10px;
+}
+
+#formulario {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+  gap: 10px;
+}
+
+.tituloPrincipal {
+    font-family: 'Inter', sans-serif; /* Sugestão de fonte discreta e moderna (você deve importá-la) */
+    font-size: 1.6em; /* Tamanho reduzido (pode ajustar de 1.8em a 2.5em) */
+    font-weight: 400; /* Normal (sem negrito) */
+    color: #4a4a4a; /* Cor cinza escura sutil */
+
+    /* 2. Alinhamento e Espaçamento */
+    text-align: left; /* Alinhamento à esquerda, conforme solicitado */
+    padding: 10px 0; /* Espaçamento interno menor */
+    margin: 10px 0 10px 10px; /* Margem: topo, direita, baixo, esquerda (20px de margem esquerda para não colar na borda) */
+    
+    /* 3. Efeito Visual Limpo */
+    letter-spacing: 1px; /* Espaçamento entre letras sutil, dando um toque moderno */
+    border-bottom: 2px solid #e0e0e0; /* Linha discreta para separar e dar elegância */
+    width: fit-content; /* Faz a linha de baixo acompanhar o tamanho do texto */
+}
+
+.wrapper { /*os filhos do wrapper sao os container de caixa e botoes, o que fizer no wrapper reflete neles*/
+  background-color: #e6e6fa;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column; /*deixa os filhos em linhas ou colunas*/ 
+  /*align-items: center; /*alinha os filhos verticalmente se ROW, se COLUMN alinha Horiz*/
+  /*justify-content: center; /*alinha os filhos verticalmente se COLUMN, se ROW alinha Horiz*/
+  gap: 60px; /*espaçamento entre os elementos dentro do wrapper, como o wrapper tem dois macro componentes
+              2 caixas de texto e 2 botões, ele separa as caixas dos botões, mas mantem as caixas juntas */
+  padding: 20px 25px; /* respiro (espaço entre borda do elemento e seu filho VxH) só surte efeito visual se os elementos tiverem colados na borda*/
+                      /*Não usar padding pra reduzir tamanho de botões e caixas de texto*/
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+  flex: 1 1 100%;                      
+  /* border-radius: 12px; */
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);*/
+  /*min-height: 100vh; /*o wrapper oculto ocupa 100% da visualização da tela*/
+  /*width: 920px; /*era quando o wrapper era aquela caixa branca ao centro*/
+  /*height: 420px; /*era quando o wrapper era aquela caixa branca ao centro*/
+
+}
+
+.campos { /*pai das linhas*/
+  display: flex;
+  flex-direction: column; /*deixa os filhos em linhas ou colunas, no caso os filhos do são linha 1 e 2*/
+  gap: 12px;/*espaçamento entre os elementos dentro da classe campos, como são 2 linhas ele separa as linhas
+  /*como eu não disse nada sobre o tamanho desse container ele terá 100% do tamanho do pai .wrapper*/
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+}
+
+.linha {
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+  display: flex;
+  flex-direction: row; /*deixa os filhos em linhas ou colunas*/
+  align-items: center;
+  gap: 28px;
+}
+
+.linha2 {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 20px; /*nao faz sentido esse gap se for space-bet*/
+}
+
+/*
+ * 1. AJUSTE DE LARGURA DO TOM SELECT
+ * O Tom Select usa a classe .ts-control ou .ts-wrapper como contêiner principal.
+ */
+.ts-wrapper,
+.ts-control {
+    /* Define a largura do componente. Ajuste 400px conforme sua necessidade. */
+    width: 400px;
+    /* margin-bottom: 15px; */
+}
+
+/*
+ * 2. ESTILOS DAS PÍLULAS SELECIONADAS (TAGS)
+ * A classe .item controla a pílula selecionada.
+ * Ajusta o contraste para Fundo Claro e Fonte Escura.
+ */
+.ts-wrapper .item {
+    /* Fundo claro para boa leitura (corrigindo o cinza escuro) */
+    background-color: #e9ecef; /* Cinza claro suave */
+    
+    /* Cor da fonte escura para alto contraste */
+    color: #333333; 
+    
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-top: 3px;
+    margin-right: 5px;
+    font-size: 14px;
+    display: inline-flex; /* Garante que os itens fiquem lado a lado */
+    align-items: center;
+}
+
+/* * 3. ESTILO DAS PÍLULAS NO HOVER
+ * Garante que o texto continue legível quando o mouse passar por cima.
+ */
+.ts-wrapper .item.active {
+    /* Deixa o fundo um pouco mais escuro no hover para feedback visual */
+    background-color: #dee2e6; 
+    color: #333333; /* Mantém o texto escuro */
+}
+
+/*
+ * 4. ESTILO DO ÍCONE DE REMOÇÃO (X) NO HOVER
+ * Garante que o ícone de remoção (X) tenha cor legível e feedback.
+ */
+.ts-wrapper .item .remove {
+    margin-left: 5px;
+    color: #6c757d; /* Cor do 'X' em estado normal */
+    font-weight: bold; 
+    cursor: pointer;
+}
+
+.ts-wrapper .item .remove:hover {
+    color: #dc3545; /* Vermelho forte para indicar exclusão no hover */
+}
+
+.botoes {
+  display: flex;
+  flex-direction: row; /*deixa os filhos em linhas ou colunas, no caso os filhos são Enviar e Cancelar*/
+  justify-content: flex-end; /*alinha os filhos verticalmente se COLUMN, se ROW alinha Horiz*/
+  gap: 12px; /*espaçamento entre os dois botões*/
+}
+
+.br-input,
+.br-select { /*componente que tem como filhos o label+caixa de texto*/
+  display: flex;
+  flex-direction: column; /*label acima da caixa pois eles são os filhos do br-input*/
+  padding: 8px; /*respiro do label + caixa dentro do pai br-input*/
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 14px; /*fonte do label*/
+  color: #333; /*cor da fonte do label*/
+  gap: 8px; /*espaço entre label e caixa de texto*/
+  /*flex: 0 0 70%; /*ocupar 70% da largura da linha, e o botão vai usar o espaço restante.
+                  Ela não cresce nem encolhe automaticamente — fica estável, mantendo a proporção.*/
+  flex: 1 1 auto; /*Este elemento pode crescer e encolher conforme o espaço disponível,
+                    e o tamanho base inicial é automático (calculado pelo conteúdo).*/
+  min-width: 0;  /* evita overflow quando o botão está na mesma linha */
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+  /*width: 320px; /*define manualmente o tamanho de todas as caixa de texto*/
+  /*width: 60% /*define manualmente o tamanho de todas as da caixa de texto*/ 
+}
+
+.br-input input { /*componente que tem como filhos a caixa de texto somente - Label fica fora*/
+  width: 100%; /*O filho deve ocupar 100% da largura disponível dentro do elemento pai.*/
+  padding: 8px; /*Respiro do "Digite seu nome" em relação a borda da caixa de texto, faz a caixa de texto crescer*/ 
+  /* border: 1px solid #08e726; se quiser colocar borda na caixa de texto, por padrao no navegador ja vem cinza */
+}
+
+/* trava o bloco Data de Nascimento para não esticar */
+.br-input.input-data {
+  flex: 0 0 160px;   /* não cresce nem encolhe; base 160px */
+}
+
+
+/* ===== Reset unificado de campos de formulário (desktop) ===== */
+/* Herda tipografia global e padroniza altura/box-model */
+.br-input input,
+.br-select select {
+  font: inherit;          /* família, tamanho, peso, line-height... */
+  color: inherit;         /* mesma cor do body/.br-input */
+  height: 35px;           /* mesma altura para todos */
+  padding: 6px 8px;       /* conforto (coerente com seus 8px) */
+  box-sizing: border-box; /* altura/largura previsíveis */
+}
+
+/*.br-select select {
+height: 35px; /*por padrao o navegador traz o select menor, ajustamos a altura para ifcar igual ao input CPF*/
+/* } */
+
+.select-uf {
+  flex: 0 0 7%; /*0 → não cresce além do tamanho definido
+                  0 → não encolhe abaixo do tamanho definido
+                  40% → largura fixa proporcional ao pai*/
+}
+
+.input-cpf {
+  flex: 0 0 15%; /*0 → não cresce além do tamanho definido
+                  0 → não encolhe abaixo do tamanho definido
+                  40% → largura fixa proporcional ao pai*/
+}
+
+button {
+  padding: 6px 12px; /*respiro entre texto e borda do botão*/
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap; /* impede quebra de linha do label do botão*/
+  min-width: 120px; /*mantem uma largura minima dos botoes, mas se o texto crescer o botão tambem cresce*/ 
+  flex: 0 0 auto; /* botão não cresce nem encolhe dentro da linha */
+  /*margin-right: 8px; /*Deixa um espaço entre a margem direita e o botão*/
+}
+
+button:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.br-button.primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.br-button.primary:hover {
+  background-color: #0056b3;
+}
+
+.br-button.secondary {
+  background-color: #ccc;
+  color: #000;
+}
+
+.br-button.secondary:hover {
+  background-color: #999;
+}
+
+/* CSS para o ícone de lixeira/deletar */
+.btn-deletar,
+.btn-editar {
+    /* Remove a aparência padrão do botão */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    /* Faz o ponteiro aparecer sobre o ícone */
+    cursor: pointer; 
+    /* Garante que o ícone fique no centro se a TD for maior */
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    /* Melhora a UX: Efeito de hover */
+    transition: color 0.2s;
+    color: #666; /* Cor padrão do ícone */
+    min-width: 50px;
+}
+
+.btn-deletar:focus,
+.btn-editar:focus {
+    outline: none; /* Remove o contorno padrão do navegador */
+    box-shadow: none; /* Remove qualquer sombra de foco */
+}
+
+
+.tabelas {
+  width: 100%;
+  border-collapse: collapse; /* une as bordas das células */
+  border: 2px solid #d0d0d0; /* borda externa sutil na tabela */
+  table-layout: auto;   /* (padrão) deixa o navegador ajustar pela largura do conteúdo */
+}
+
+.tabelas thead { /* === Cabeçalho da tabela === */
+  background-color: hwb(0 60% 40% / 0.37);
+  border-bottom: 3px solid #c0c0c0; /* borda abaixo do cabeçalho */
+}
+
+/* === Bordas das células === */
+.tabelas th,
+.tabelas td {
+  border: 2px solid #e0e0e0; /* cor leve para não poluir visualmente */
+  padding: 10px 12px;        /* respiro interno (VxH) entre o conteúdo e a borda da celula*/
+}
+
+.caption-inner { /*Pai dos span "Lista de usuários" e "Registros:2"*/
+  padding-bottom: 30px;  /* espaço entre o caption e a tabela */
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Header coluna nome */
+th.col-nome {
+  text-align: center;
+}
+/* Dados da coluna nome */
+td.col-left {
+  text-align: left;
+}
+
+td.col-right {
+  text-align: right;
+}
+
+td.col-center {
+  text-align: center;
+}
+
+.eye-icone,
+.trash-icone,
+.edit-icone {
+  width: 20px;
+  height: 20px;
+  margin: 0 6px;            /* espaçamento VxH entre ícones */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  color: #0055cc;
+}
+
+.col-acoes {
+  text-align: center;     /* centraliza conteúdo inline/inline-flex */
+  white-space: nowrap;    /* impede os ícones de quebrarem linha */
+  padding: 0 8px;         /* padding enxuto ajuda a coluna a “encolher” */
+  width: 1%;              /* dica p/ layout da tabela encolher ao mínimo */
+}
+
+.col-acoes .acoes-icone {
+  display: inline-flex;   /* fica inline (respeita text-align) e flex entre ícones */
+  align-items: center;
+  gap: 8px;               /* espaço entre ícones */
+}
+
+/* Aplica aparência padronizada a todos os inputs e selects */
+/*input[type="text"],
+select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+  height: 34px;
+}
+
+/* Cabeçalho fixo no topo */
+/*.topo {
+  position: fixed;       /* mantém o topo sempre visível */
+  /*top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;          /* ajuste conforme o tamanho do logo */
+  /*background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;    /* espaço da borda esquerda */
+  /*box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* linha com sombra abaixo da imagem */
+ /* z-index: 1000;
+}
+
+/* Logo em si */
+/*.logo {
+  height: 40px;          /* redimensiona o logotipo */
+  /*width: auto;
+}
+
+/* ====== MODO DEBUG ====== */
+/*body.debug { border: 2px solid lime }*/
+/* .debug .main { outline: 2px dashed rgb(227, 252, 4); } */
+/* .debug .wrapper { outline: 2px dashed rgb(250, 3, 209); }  */
+/* .debug .campos { outline: 2px dashed #0a0; } */
+/* .debug .container.botoes { outline: 2px dashed #a00; } */
+/* .debug .linha { outline: 1px dotted #f81c1c; } */
+/* .debug .br-input { outline: 1px dotted #f50828; } */
+/* .debug .br-select { outline: 1px dotted #0e2fe9; } */
+/* .debug .botoes { outline: 1px dotted #0e2fe9; } */
+/* ========================= */

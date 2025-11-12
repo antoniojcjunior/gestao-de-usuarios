@@ -1,0 +1,6 @@
+# ===== Node (back-end) =====
+backend/node_modules/
+backend/.env
+
+# ===== Sistema / editor =====
+.vscode/
