@@ -66,7 +66,7 @@ app.post('/api/usuarios', async (req, res) => {
       'INSERT INTO usuarios (nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao',
       [nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, dataNormalizada, remunNumerica]
     );
-    console.log('Usuário incluído com sucesso:', rows[0]);
+    //console.log('Usuário incluído com sucesso:', rows[0]);
     return res.status(201).json(rows[0]); // { id, cpf }
   } catch (err) {
     // 23505 = unique_violation no Postgres
