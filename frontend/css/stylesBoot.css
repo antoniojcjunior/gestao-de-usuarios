@@ -50,17 +50,25 @@ section.card {
 /* Esconde o SELECT original que ainda NÃO foi transformado pelo Tom Select */
 /* O seletor ':not([class*="ts-"])' garante que ele só afria o SELECT original */
 /* Oculta APENAS o elemento turnos-multi antes que o Tom Select o inicialize (FOUC) */
-#turnos-multi:not([class*="ts-"]) {
-    display: none !important;
+ #turnos-multi:not([class*="ts-"]) {
+    /*display: none !important;*/
+    /* Corrige a altura excessiva no estado "Carregando..." */
+    height: 38px !important; 
+    min-height: 38px !important;
+    
+    /* Corrige o problema de largura no estado inicial, garantindo que ele caiba */
+    max-width: 90% !important;
+    border: none !important; 
+    box-shadow: none !important;
 }
 
 /* Este CSS irá estilizar o componente TOM SELECT DEPOIS que ele for criado pelo JS */
 .ts-wrapper, 
 .tom-select {
-    max-width: 100% !important; /* Essencial para a correção no mobile */
-} 
+    max-width: 100% !important; /*Essencial para a correção no mobile */
+  } 
 /* Opcional: Garanta que o menu de opções (dropdown) não seja afetado */
-.ts-dropdown {
+ .ts-dropdown {
     max-width: none !important; 
     overflow: visible !important;
-}
+  }
