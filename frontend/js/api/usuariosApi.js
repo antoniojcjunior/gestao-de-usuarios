@@ -1,6 +1,6 @@
 // apenas as chamadas ao back
 
-const API_BASE = 'http://localhost:3000'; // ajuste aqui se trocar host/porta
+import { API_BASE } from '../../src/config.js';
 
 //Incluir usuário
 export async function postUsuario(dadosEnviados) {

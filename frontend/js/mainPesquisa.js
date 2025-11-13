@@ -4,9 +4,7 @@ import { aplicarMascaraCPF } from './utils/util.js';
 import { carregarSelectMultiplo, carregarSelect } from './utils/carregarSelect.js';
 //import { initModalEditarUsuario } from './pages/modalEditarUsuario.js';
 
-const API_BASE = window.location.origin.includes('vercel.app')
-  ? '' // produção: chama via rewrite (/api/...)
-  : 'http://localhost:3000'; // desenvolvimento local
+import { API_BASE } from '../src/config.js';
 
 /*document.addEventListener('DOMContentLoaded', carregarSetores); /*chama a função carregarSetores depois que o HTML temrina de carregar*/
 document.addEventListener('DOMContentLoaded', () => {
