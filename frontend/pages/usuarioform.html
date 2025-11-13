@@ -35,13 +35,13 @@
         <div class="row primeira mt-3 mb-3">
           <div class="col">    <!-- Pai do Label + caixa de texto -->
             <label class="form-label" for="nome">Nome:</label>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" data-obrigatorio>
+            <input tabindex="1" type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" data-obrigatorio>
           </div>
         </div>
         <div class="row segunda mb-3 gy-3 justify-content-between">
           <div class="col-md-3">
             <label class="form-label" for="cpf">CPF:</label>
-            <input class="form-control" type="text" id="cpf" name="cpf"
+            <input tabindex="2" class="form-control" type="text" id="cpf" name="cpf"
                 placeholder="Digite o CPF"
                 inputmode="numeric"
                 maxlength="14"
@@ -50,7 +50,7 @@
           </div>
           <div class="col-md-2">
             <label class="form-label" for="data_nascimento">Data de Nascimento:</label>
-            <input class="form-control"
+            <input tabindex="3" class="form-control"
               type="date"
               id="data_nascimento"
               name="data_nascimento" />
@@ -58,7 +58,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label" for="regiao">Região de Residencia:</label>
-            <select id="regiao" class="form-select" name="regiao" data-placeholder="Selecione a região">
+            <select tabindex="4" id="regiao" class="form-select" name="regiao" data-placeholder="Selecione a região">
               <option value="" disabled selected>Selecione a região</option>
               <!-- <option value="">-- Escolha uma opção --</option> -->
             </select>
@@ -73,14 +73,14 @@
         <div class="row terceira mb-3 gy-3">
           <div class="col-md-6">
             <label class="form-label" for="setor">Setor onde atua na empresa:</label>
-            <select id="setor" class="form-select" name="setor" data-placeholder="Selecione o setor">
+            <select tabindex="5" id="setor" class="form-select" name="setor" data-placeholder="Selecione o setor">
               <option value="" disabled selected>Selecione o setor</option>
               <!-- <option value="" disabled selected>Selecione</option>  Foi apagada pois está sendo inserida pelo JS -->
             </select>
           </div>
           <div class="col-md-6">
             <label class="form-label" for="turno">Turno:</label>
-            <select id="turno" class="form-select" name="turno" data-placeholder="Selecione o turno">
+            <select tabindex="6" id="turno" class="form-select" name="turno" data-placeholder="Selecione o turno">
               <option value="" disabled selected>Selecione o turno</option>
               <!-- <option value="" disabled selected>Selecione</option>  Foi apagada pois está sendo inserida pelo JS -->
             </select>
@@ -89,7 +89,7 @@
         <div class="row quarta mb-3 gy-3">
           <div class="col-md-2">
             <label class="form-label" for="remuneracao">Remuneracao:</label>
-            <input class="form-control"
+            <input tabindex="7" class="form-control"
               type="text" 
               id="remuneracao" 
               name="remuneracao"
