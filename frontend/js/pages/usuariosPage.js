@@ -2,7 +2,7 @@
 import { postUsuario } from '../api/usuariosApi.js';
 import { validarCamposObrigatorios } from '../utils/util.js';
 import { limparFormulario } from '../utils/util.js';
-import { showConfirm } from '../utils/showAlert.js';
+import { showConfirm, showAlert } from '../utils/showAlert.js';
 
 export async function incluirUsuario() {
 
@@ -31,7 +31,7 @@ export async function incluirUsuario() {
     if (!validarCamposObrigatorios(campos)) return;
   }
 
-  const isConfirmed = await showConfirm("Deseja realmente incluir este novo usuário?");  
+  const isConfirmed = await showConfirm("Confirma inclusão?");  
   if (!isConfirmed) {
       // Se o usuário clicou em 'Não' (isConfirmed é false),
       // SIMPLESMENTE TERMINAMOS A FUNÇÃO AQUI:
@@ -47,7 +47,9 @@ export async function incluirUsuario() {
   try {
     const dados = await postUsuario(dadosEnviados);
     console.log('📬 Retorno do servidor:', dados);
-    alert(`Usuário(a) ${nome} cadastrado(a) com sucesso!`);
+    showAlert(`Usuário(a) ${nome} cadastrado(a) com sucesso!`);
+    //showAlert("Inclusão realizada com sucesso!");
+    //alert(`Usuário(a) ${nome} cadastrado(a) com sucesso!`);
     limparFormulario();
   } catch (erro) {
     console.error('Erro na requisição:', erro);

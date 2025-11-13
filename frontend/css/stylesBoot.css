@@ -36,3 +36,12 @@ section.card {
   justify-content: space-between;
   align-items: center;
 }
+
+/* Remove a borda inferior do cabeçalho */
+.modal-header {
+    border-bottom: none;
+}
+/* Remove a borda superior do rodapé */
+.modal-footer {
+    border-top: none;
+}
