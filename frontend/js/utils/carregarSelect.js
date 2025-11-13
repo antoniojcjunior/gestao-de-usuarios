@@ -1,4 +1,4 @@
-export async function carregarSelect({ url, selectId, labelCampo = 'nome' }) {
+export async function carregarSelect({ url, selectId, labelCampo = 'nome', montarLabel }) {
   try {
     const resp = await fetch(url);
     if (!resp.ok) throw new Error(`Falha na resposta de ${url}`);
@@ -13,7 +13,12 @@ export async function carregarSelect({ url, selectId, labelCampo = 'nome' }) {
     dados.forEach(item => {
       const opt = document.createElement('option');
       opt.value = item.id;
-      opt.textContent = item[labelCampo];
+       // Se tiver callback, usa ele; se não, volta pro campo simples
+      if (typeof montarLabel === 'function') {
+        opt.textContent = montarLabel(item); // ex.: "PLAN — Planejamento"
+      } else {
+        opt.textContent = item[labelCampo];
+      }
       select.appendChild(opt);
     });
 

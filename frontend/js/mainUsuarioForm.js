@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   limitaDataNascimento();
   await Promise.all([
         // Carrega Setores, Regiões e Turnos em paralelo para máxima performance.
-        carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor' }),
+        carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor', montarLabel: (item) => `${item.sigla} — ${item.nome}` }),
         carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' }),
         carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turno', labelCampo: 'turno' })
     ]);
