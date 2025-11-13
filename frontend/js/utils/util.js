@@ -1,3 +1,5 @@
+import { showAlert } from './showAlert.js';
+
 // Função para limpar formulário
 export function limparFormulario() {
   const form = document.getElementById('formulario');
@@ -100,7 +102,7 @@ export function limitaDataNascimento() {
 export function validarCamposObrigatorios(campos) {
 for (const campo of campos) {
   if (!campo.valor) {
-    alert(campo.mensagem);
+    showAlert(campo.mensagem);
     return false;
   }
 }

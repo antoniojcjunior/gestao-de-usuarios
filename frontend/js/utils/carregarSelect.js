@@ -23,6 +23,24 @@ export async function carregarSelect({ url, selectId, labelCampo = 'nome' }) {
   }
 }
 
+//Select com Filtro TomSelect
+export function selectFilter(elementId) {
+    const selectElement = document.getElementById(elementId);
+    
+    if (selectElement) {
+        new TomSelect(selectElement, {
+            create: false, // Desativa a criação de novas opções
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+        // Retorna o objeto TomSelect se precisar manipulá-lo depois
+        return selectElement.tomselect; 
+    }
+    return null;
+}
+
 // Use esta função SOMENTE para <select multiple> com Tom Select
 export async function carregarSelectMultiplo({
   url,

@@ -1,7 +1,7 @@
 import { incluirUsuario } from './pages/usuariosPage.js';
 import { preencherUFs } from './utils/localizacao.js';
 import { aplicarMascaraCPF } from './utils/util.js';
-import { carregarSelect } from './utils/carregarSelect.js';
+import { carregarSelect, selectFilter } from './utils/carregarSelect.js';
 import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from './utils/util.js';
 import { getUsuarioPorId } from './api/usuariosApi.js';
 
@@ -16,14 +16,20 @@ document.getElementById('formulario').addEventListener('submit', async (e) => {
 });
 
 /*document.addEventListener('DOMContentLoaded', carregarSetores); /*chama a função carregarSetores depois que o HTML temrina de carregar*/
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   aplicarMascaraCPF();
   aplicarMascaraMonetaria();
   preencherUFs();
   limitaDataNascimento();
-  carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor' });
-  carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' });
-  carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turno', labelCampo: 'turno' });
+  await Promise.all([
+        // Carrega Setores, Regiões e Turnos em paralelo para máxima performance.
+        carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor' }),
+        carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' }),
+        carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turno', labelCampo: 'turno' })
+    ]);
+    
+    // 2. Inicializa o Tom Select (Somente após o 'await' garantir que 'setor' está populado)
+    selectFilter('setor');
 });
 
 // Listener dos botões
