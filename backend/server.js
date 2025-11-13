@@ -4,6 +4,8 @@ import cors from 'cors';
 import pkg from 'pg';
 const { Pool } = pkg;
 
+import { normalizarDataNascimento } from './utils/ajusteDatas.js';
+
 process.env.PGCLIENTENCODING = 'UTF8';
 
 const app = express();
@@ -22,6 +24,7 @@ app.post('/api/usuarios', async (req, res) => {
   try {
     const { nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao } = req.body;
     const cpfLimpo = String(cpf || '').replace(/\D/g, ''); // limpa o CPF, só digitos
+    const dataNormalizada = normalizarDataNascimento(data_nascimento);
     const setorIdNum  = Number(setor_id);
     const regiaoIdNum = Number(regiao_id);
     const turnoIdNum = Number(turno_id);
@@ -61,7 +64,7 @@ app.post('/api/usuarios', async (req, res) => {
 
     const { rows } = await pool.query(
       'INSERT INTO usuarios (nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao',
-      [nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, data_nascimento, remunNumerica]
+      [nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, dataNormalizada, remunNumerica]
     );
     console.log('Usuário incluído com sucesso:', rows[0]);
     return res.status(201).json(rows[0]); // { id, cpf }
