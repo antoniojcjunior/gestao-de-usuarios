@@ -2,6 +2,7 @@ import { incluirUsuario } from './pages/usuariosPage.js';
 import { preencherUFs } from './utils/localizacao.js';
 import { aplicarMascaraCPF } from './utils/util.js';
 import { carregarSelect, selectFilter } from './utils/carregarSelect.js';
+import { ajustarCampoDataParaMobile } from './utils/dataMobile.js';
 import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from './utils/util.js';
 import { getUsuarioPorId } from './api/usuariosApi.js';
 
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   aplicarMascaraMonetaria();
   preencherUFs();
   limitaDataNascimento();
+  ajustarCampoDataParaMobile()
   await Promise.all([
         // Carrega Setores, Regiões e Turnos em paralelo para máxima performance.
         carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor', montarLabel: (item) => `${item.sigla} — ${item.nome}` }),
