@@ -2,6 +2,15 @@ import { showAlert } from './showAlert.js';
 
 // Função para limpar formulário
 export function limparFormulario() {
+  // 1. Limpeza do Tom Select 'setor'
+  // Deve ser feito antes do form.reset(), ou a lógica de select pode interferir
+  const selectSetor = document.getElementById('setor');
+  
+  // Verifica se o elemento existe e se o Tom Select foi inicializado (.tomselect)
+  if (selectSetor && selectSetor.tomselect) {
+      // Usa o método de API 'clear()' para remover a seleção do Tom Select
+      selectSetor.tomselect.clear(); 
+  }
   const form = document.getElementById('formulario');
   form.reset();
 
