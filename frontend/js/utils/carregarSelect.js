@@ -30,20 +30,27 @@ export async function carregarSelect({ url, selectId, labelCampo = 'nome', monta
 
 //Select com Filtro TomSelect
 export function selectFilter(elementId) {
-    const selectElement = document.getElementById(elementId);
+  const selectElement = document.getElementById(elementId);
     
-    if (selectElement) {
-        new TomSelect(selectElement, {
-            create: false, // Desativa a criação de novas opções
-            sortField: {
-                field: "text",
-                direction: "asc"
-            }
-        });
-        // Retorna o objeto TomSelect se precisar manipulá-lo depois
-        return selectElement.tomselect; 
+  if (selectElement) {
+      const tomSelectInstance = new TomSelect(selectElement, {
+          create: false,
+          sortField: {
+              field: "text",
+              direction: "asc"
+          }
+      });
+      tomSelectInstance.on('item_add', () => {
+          // Força o campo de entrada (input) do Tom Select a perder o foco.
+          tomSelectInstance.blur();
+      });
+
+      // 3. ATENÇÃO: Retorno do objeto
+      // O Tom Select anexa a si mesmo ao elemento DOM, mas a forma mais limpa é retornar
+      // a instância diretamente que acabamos de criar.
+      return tomSelectInstance;
     }
-    return null;
+  return null;
 }
 
 // Use esta função SOMENTE para <select multiple> com Tom Select
