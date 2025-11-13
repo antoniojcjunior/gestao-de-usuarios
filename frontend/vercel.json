@@ -1,16 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/regioes",
-      "destination": "https://gestao-de-usuarios-rxgo.onrender.com/api/regioes"
-    },
-    {
-      "source": "/api/setores",
-      "destination": "https://gestao-de-usuarios-rxgo.onrender.com/api/setores"
-    },
-    {
-      "source": "/api/turnos",
-      "destination": "https://gestao-de-usuarios-rxgo.onrender.com/api/turnos"
+      "source": "/api/:path*",
+      "destination": "https://gestao-de-usuarios-rxgo.onrender.com/api/:path*"
     }
   ]
 }
