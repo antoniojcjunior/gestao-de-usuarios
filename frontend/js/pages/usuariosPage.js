@@ -2,6 +2,7 @@
 import { postUsuario } from '../api/usuariosApi.js';
 import { validarCamposObrigatorios } from '../utils/util.js';
 import { limparFormulario } from '../utils/util.js';
+import { showConfirm } from '../utils/showAlert.js';
 
 export async function incluirUsuario() {
 
@@ -25,10 +26,18 @@ export async function incluirUsuario() {
     { valor: turno_id, mensagem: 'Por favor, selecione o turno.' },
     { valor: remuneracao, mensagem: 'Por favor, informe a remuneração.' }
   ];
+
   if (typeof validarCamposObrigatorios === 'function') {
     if (!validarCamposObrigatorios(campos)) return;
   }
 
+  const isConfirmed = await showConfirm("Deseja realmente incluir este novo usuário?");  
+  if (!isConfirmed) {
+      // Se o usuário clicou em 'Não' (isConfirmed é false),
+      // SIMPLESMENTE TERMINAMOS A FUNÇÃO AQUI:
+      // A TELA DE EDIÇÃO JÁ É MANTIDA, POIS NÃO HOUVE REDIRECIONAMENTO OU LIMPEZA.
+      return; // <--- Isso cancela o processo de inclusão
+  }
   // 3) montar payload
   const dadosEnviados = { nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao };
   console.log('📦 Objeto JS montado para enviar ao servidor:', dadosEnviados);
