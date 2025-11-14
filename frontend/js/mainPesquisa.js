@@ -1,27 +1,29 @@
 import { initPesquisaPage } from './pages/pesquisaPage.js';
 import { configurarDelecaoDeUsuarios } from './pages/pesquisaPage.js';
 import { aplicarMascaraCPF, limparFormulario } from './utils/util.js';
-import { carregarSelectMultiplo, carregarSelect } from './utils/carregarSelect.js';
+import { carregarSelectMultiplo, carregarSelect, selectFilter } from './utils/carregarSelect.js';
 import { setupModalFocusFix } from './utils/modalFocusHandler.js';
 //import { initModalEditarUsuario } from './pages/modalEditarUsuario.js';
 
 import { API_BASE } from '../src/config.js';
 
 /*document.addEventListener('DOMContentLoaded', carregarSetores); /*chama a função carregarSetores depois que o HTML temrina de carregar*/
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   initPesquisaPage();//essa função ativa o listener do botão pesquisar
   configurarDelecaoDeUsuarios();//essa função ativa o listener do botão Lixeira apagar
   aplicarMascaraCPF();
-  carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor' });
-  carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' });
-  carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turnos', labelCampo: 'turnos' });
+  await Promise.all([
+  carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor', montarLabel: (item) => `${item.sigla} — ${item.nome}` }),
+  carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' }),
+  carregarSelect({ url: `${API_BASE}/api/turnos`, selectId: 'turnos', labelCampo: 'turnos' })
+  ]);
   carregarSelectMultiplo({
   url: `${API_BASE}/api/turnos`,
   selectId: 'turnos-multi',
   placeholder: 'Selecione',
   labelCampo: 'turno',
-  // preselecionados: ['2','3'] // se quiser iniciar com valores marcados
-});
+  });
+  selectFilter('setor');
   setupModalFocusFix();
 //initModalEditarUsuario() //Chama o modal
 

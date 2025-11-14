@@ -75,14 +75,25 @@ section.card {
 /* Seletor para o item selecionado dentro da caixa de seleção */
 [tomselect-multi] + .ts-wrapper .ts-control .item {
   /* Altere o valor de font-size conforme sua necessidade */
-  font-size: 1.3em; /* Exemplo: 10% maior que o tamanho base */
+  font-size: 1.0em; /* Exemplo: 10% maior que o tamanho base */
   /* ou use pixels */
   /* font-size: 16px; */ 
 }
-
+/* Configuração Padrão (Desktop-First) */
+/* Aplica 1.0em como padrão para telas maiores ou iguais a 768px (Desktop e Tablets em Landscape) */
 [tomselect-multi] + .ts-wrapper .ts-dropdown .option {
-  /* Altere o valor de font-size conforme sua necessidade */
-  font-size: 1.3em;
+  font-size: 1.0em;
+}
+
+/* Regra para Mobile (max-width) */
+/* Sobrescreve a regra anterior para telas menores que 768px (Smartphones e Tablets em Portrait) */
+@media (max-width: 767.98px) {
+  [tomselect-multi] + .ts-wrapper .ts-dropdown .option {
+    font-size: 1.3em;
+  }
+  [tomselect-multi] + .ts-wrapper .ts-control .item {
+    font-size: 1.3em;
+  }
 }
 
 /*tabela de resultados no mobile*/
@@ -106,4 +117,9 @@ select:has(option[value=""]:checked) {
 /* Mas quando o select estiver aberto (dropdown), volte para a cor normal */
 select option {
   color: #000; /* cor normal das opções */
+}
+
+/*o label do select multiplo TS vem por padrao sem margem, adicionei para ficar alinhado com os demais*/
+#turnos-multi-ts-label {
+  margin-bottom: 8px !important;
 }

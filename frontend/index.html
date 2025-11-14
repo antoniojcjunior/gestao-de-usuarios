@@ -10,8 +10,10 @@
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
   crossorigin="anonymous"/>
   <!-- <link rel="stylesheet" href="/css/styles.css"> -->
-  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==">
- <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet" />
+ <!-- <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="> -->
+ <link 
+    href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.css" 
+    rel="stylesheet"/>
  <link rel="stylesheet" href="./css/stylesBoot.css">
 </head>
 <body class="bg-light">
@@ -47,7 +49,14 @@
             </div>
           </div>       
           <div class="row segunda mt-3">  <!-- mt margem gy gap vertical -->
-            <div class="col-md-2">
+            <div class="col-md-6">
+              <label class="form-label" for="setor">Setor onde atua na empresa:</label>
+              <select data-tomselect id="setor" class="form-select" name="setor" data-placeholder="Selecione o setor" data-obrigatorio="true">
+                <option value="" disabled selected>Carregando...</option>
+                <!-- <option value="" disabled selected>Selecione</option>  Foi apagada pois está sendo inserida pelo JS -->
+              </select>
+            </div>
+            <div class="col-md-6">
               <label for="turnos-multi">Turno:</label>
               <select data-tomselect tomselect-multi id="turnos-multi" multiple="multiple" style="width:260px">
                 <option value="" selected disabled>Carregando...</option>
@@ -99,13 +108,13 @@
     integrity="sha384-12XSlvcHmo+GznHloktY+lT6qPgXYbPqMFGiY0JflahmzOxYAkfrK+YzvoBAH+qQ"
     crossorigin="anonymous">
   </script>
-  <!-- biblioteca Tom Select -->
-  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
   <script 
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
   crossorigin="anonymous">
   </script>
+  <!-- biblioteca Tom Select -->
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
   <script type="module" src="js/ui/renderUsuarios.js"></script>
   <!-- script principal por último -->
   <script defer type="module" src="js/mainPesquisa.js"></script>
