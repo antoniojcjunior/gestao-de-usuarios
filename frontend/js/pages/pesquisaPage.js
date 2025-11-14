@@ -3,6 +3,7 @@ import { deleteUsuario } from '../api/usuariosApi.js';
 import { renderTabelaUsuarios } from '../ui/renderUsuarios.js';
 import { setUsuariosCache } from '../utils/usuariosCache.js';
 import { showAlert, showConfirm } from '../utils/showAlert.js';
+import { limparFormulario } from '../utils/util.js';
 
 //ativa o listener botão pesquisar e ao clicar chama o executarPesquisa
 export function initPesquisaPage() {
@@ -95,6 +96,7 @@ export function configurarDelecaoDeUsuarios() {
                     //alert(`Usuário ${userNome} excluído com sucesso!`);
                     showAlert(`Usuário(a) ${userNome} excluído com sucesso!`);
                     // Recarrega a lista completa para atualizar o DOM e o contador
+                    limparFormulario();
                     executarPesquisa(); 
                     
                 } else {
