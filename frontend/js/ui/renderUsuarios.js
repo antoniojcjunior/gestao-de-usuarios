@@ -29,14 +29,14 @@ export function renderTabelaUsuarios(containerEl, usuarios) {
 
   // 2. CONSTRUÇÃO DO CABEÇALHO (THEAD)
     const tableHeader = `
-        <thead class="table-dark">
+        <thead class="table-secondary">
           <tr>
             <th class="text-center" scope="col">Nome</th>
             <th class="text-center" scope="col">CPF</th>
             <th class="text-center" scope="col">Turno</th>
             <th class="text-center" scope="col">Região</th>
             <th class="text-center" scope="col">Data de nascimento</th>
-            <th class="text-center" scope="col">Remuneracao</th>
+            <th class="text-center" scope="col">Remuneração</th>
             <th class="text-center" scope="col">Ações</th>
           </tr>
         </thead>
