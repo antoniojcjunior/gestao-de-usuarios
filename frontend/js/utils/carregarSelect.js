@@ -7,9 +7,16 @@ export async function carregarSelect({ url, selectId, labelCampo = 'nome', monta
     const select = document.getElementById(selectId);
     if (!select) return;
 
+    const obrigatorio = select.dataset.obrigatorio === 'true';
     const texto = select.dataset.placeholder || '-- Escolha uma opção --';
-    select.innerHTML = `<option value="" disabled selected>${texto}</option>`;
-
+    if (obrigatorio) {
+      // formulário de inclusão: usuário é obrigado a escolher
+      select.innerHTML = `<option value="" disabled selected>${texto}</option>`; //mostra o texto q vc definiu no html
+    } else {
+      // página de pesquisa: usuário pode "desmarcar" voltando para (nenhuma)
+      select.innerHTML = `<option value="">${texto}</option>`;
+      }
+    
     dados.forEach(item => {
       const opt = document.createElement('option');
       opt.value = item.id;

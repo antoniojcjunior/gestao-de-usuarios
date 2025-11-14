@@ -66,9 +66,16 @@ section.card {
 .ts-wrapper, 
 .tom-select {
     max-width: 100% !important; /*Essencial para a correção no mobile */
-  } 
+} 
 /* Opcional: Garanta que o menu de opções (dropdown) não seja afetado */
  .ts-dropdown {
     max-width: none !important; 
     overflow: visible !important;
-  }
+}
+/* Seletor para o item selecionado dentro da caixa de seleção */
+.ts-control .item {
+  /* Altere o valor de font-size conforme sua necessidade */
+  font-size: 1.3em; /* Exemplo: 10% maior que o tamanho base */
+  /* ou use pixels */
+  /* font-size: 16px; */ 
+}
