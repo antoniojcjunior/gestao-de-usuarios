@@ -4,13 +4,18 @@ import { showAlert } from './showAlert.js';
 export function limparFormulario() {
   // 1. Limpeza do Tom Select 'setor'
   // Deve ser feito antes do form.reset(), ou a lógica de select pode interferir
-  const selectSetor = document.getElementById('setor');
+  const elementosTomSelect = document.querySelectorAll('[data-tomselect]');
   
   // Verifica se o elemento existe e se o Tom Select foi inicializado (.tomselect)
-  if (selectSetor && selectSetor.tomselect) {
+  //if (selectSetor && selectSetor.tomselect) {
       // Usa o método de API 'clear()' para remover a seleção do Tom Select
-      selectSetor.tomselect.clear(); 
-  }
+  elementosTomSelect.forEach(el => {
+  if (el.tomselect) {
+    el.tomselect.clear();          // limpa seleção
+    // el.tomselect.clearOptions(); // só use se você quiser remover TODAS as opções também
+    }
+  });
+
   const form = document.getElementById('formulario');
   form.reset();
 

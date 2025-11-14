@@ -73,7 +73,7 @@ section.card {
     overflow: visible !important;
 }
 /* Seletor para o item selecionado dentro da caixa de seleção */
-.ts-control .item {
+[tomselect-multi] + .ts-wrapper .ts-control .item {
   /* Altere o valor de font-size conforme sua necessidade */
   font-size: 1.3em; /* Exemplo: 10% maior que o tamanho base */
   /* ou use pixels */

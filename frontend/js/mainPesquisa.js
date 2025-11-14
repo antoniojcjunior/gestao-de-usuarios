@@ -1,6 +1,6 @@
 import { initPesquisaPage } from './pages/pesquisaPage.js';
 import { configurarDelecaoDeUsuarios } from './pages/pesquisaPage.js';
-import { aplicarMascaraCPF } from './utils/util.js';
+import { aplicarMascaraCPF, limparFormulario } from './utils/util.js';
 import { carregarSelectMultiplo, carregarSelect } from './utils/carregarSelect.js';
 //import { initModalEditarUsuario } from './pages/modalEditarUsuario.js';
 
@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //initModalEditarUsuario() //Chama o modal
 
+  const btnLimpar = document.getElementById('limpar');
+    btnLimpar.addEventListener('click', (e) => {
+      e.preventDefault();
+      limparFormulario(); // chama a função acima
+    });
   //Listener Botão novoUsuario
   const btnPesquisa = document.getElementById('novoUsuario');
   btnPesquisa.addEventListener('click', (e) => {
