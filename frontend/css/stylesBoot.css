@@ -79,3 +79,9 @@ section.card {
   /* ou use pixels */
   /* font-size: 16px; */ 
 }
+
+/*tabela de resultados no mobile*/
+#resultados-tabela .table-responsive {
+  width: calc(100% + 20px);
+  margin-left: -10px;
+}

@@ -6,11 +6,13 @@ export function renderTabelaUsuarios(containerEl, usuarios) {
 
   if (!Array.isArray(usuarios) || usuarios.length === 0) {
     containerEl.innerHTML = `
-      <table id="tabela-usuarios" class="table">
-        <tr>
-          <td colspan="2" style="text-align:center; opacity:.7;">Nenhum usuário encontrado</td>
-        </tr>
-      </table>
+      <div class="table-responsive">
+        <table id="tabela-usuarios" class="table">
+          <tr>
+            <td colspan="2" style="text-align:center; opacity:.7;">Nenhum usuário encontrado</td>
+          </tr>
+        </table>
+      </div>
     `;
     return;
   }
@@ -69,12 +71,14 @@ export function renderTabelaUsuarios(containerEl, usuarios) {
   
 // 4. COMBINAR TUDO E CRIAR A TAG <table>
   const fullTableHtml = `
-    <table id="tabela-usuarios" class="table table-bordered">
-        ${tableCaption} ${tableHeader}
-        <tbody>
-            ${tableRows}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+      <table id="tabela-usuarios" class="table table-bordered">
+          ${tableCaption} ${tableHeader}
+          <tbody>
+              ${tableRows}
+          </tbody>
+      </table>
+    </div>
 `;
 containerEl.innerHTML = fullTableHtml; //insere o codigo no HTML
 }
