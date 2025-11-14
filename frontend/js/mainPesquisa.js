@@ -2,6 +2,7 @@ import { initPesquisaPage } from './pages/pesquisaPage.js';
 import { configurarDelecaoDeUsuarios } from './pages/pesquisaPage.js';
 import { aplicarMascaraCPF, limparFormulario } from './utils/util.js';
 import { carregarSelectMultiplo, carregarSelect } from './utils/carregarSelect.js';
+import { setupModalFocusFix } from './utils/modalFocusHandler.js';
 //import { initModalEditarUsuario } from './pages/modalEditarUsuario.js';
 
 import { API_BASE } from '../src/config.js';
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   labelCampo: 'turno',
   // preselecionados: ['2','3'] // se quiser iniciar com valores marcados
 });
-
+  setupModalFocusFix();
 //initModalEditarUsuario() //Chama o modal
 
   const btnLimpar = document.getElementById('limpar');

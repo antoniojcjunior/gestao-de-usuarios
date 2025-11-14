@@ -80,8 +80,30 @@ section.card {
   /* font-size: 16px; */ 
 }
 
+[tomselect-multi] + .ts-wrapper .ts-dropdown .option {
+  /* Altere o valor de font-size conforme sua necessidade */
+  font-size: 1.3em;
+}
+
 /*tabela de resultados no mobile*/
 #resultados-tabela .table-responsive {
   width: calc(100% + 20px);
   margin-left: -10px;
+}
+/*deixa cabeçalhos centralizados verticalmente, ajuste no mobile*/
+#tabela-usuarios th {
+  vertical-align: middle !important;
+  text-align: center; /* se quiser centralizar horizontalmente também */
+  white-space: normal; /* permite quebrar linha sem problema */
+}
+
+/* Quando o select estiver mostrando a option vazia,
+   deixe o texto do select cinza */
+select:has(option[value=""]:checked) {
+  color: #6c757d; /* mesma cor do placeholder do input */
+}
+
+/* Mas quando o select estiver aberto (dropdown), volte para a cor normal */
+select option {
+  color: #000; /* cor normal das opções */
 }
