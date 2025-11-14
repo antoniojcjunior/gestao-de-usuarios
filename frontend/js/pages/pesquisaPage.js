@@ -2,6 +2,7 @@ import { getUsuarios } from '../api/usuariosApi.js';
 import { deleteUsuario } from '../api/usuariosApi.js';
 import { renderTabelaUsuarios } from '../ui/renderUsuarios.js';
 import { setUsuariosCache } from '../utils/usuariosCache.js';
+import { showAlert, showConfirm } from '../utils/showAlert.js';
 
 //ativa o listener botão pesquisar e ao clicar chama o executarPesquisa
 export function initPesquisaPage() {
@@ -83,15 +84,16 @@ export function configurarDelecaoDeUsuarios() {
             const userId = deleteButton.dataset.id;
             const userNome = deleteButton.dataset.nome;
 
-            // Confirmação de UX antes de deletar
-            if (confirm(`Confirma a exclusão de ${userNome}?`)) {
-                
+            // Confirmação antes de deletar
+            const isConfirmed = await showConfirm(`Confirma a exclusão de ${userNome}?`);  
+            if (isConfirmed) {
+            //if (confirm(`Confirma a exclusão de ${userNome}?`)) {
                 // Chama a API de Deleção
                 const sucesso = await deleteUsuario(userId);
 
                 if (sucesso) {
-                    alert(`Usuário ${userNome} excluído com sucesso!`);
-                    
+                    //alert(`Usuário ${userNome} excluído com sucesso!`);
+                    showAlert(`Usuário(a) ${userNome} excluído com sucesso!`);
                     // Recarrega a lista completa para atualizar o DOM e o contador
                     executarPesquisa(); 
                     

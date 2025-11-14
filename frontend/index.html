@@ -76,6 +76,23 @@
     </p>
   </div>
 </footer>
+<div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="validationModalLabel"></h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalMessage">
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmYesButton" style="display: none;">Sim</button>
+        <button type="button" class="btn btn-secondary" id="confirmNoButton" data-bs-dismiss="modal" style="display: none;">Não</button>
+        <button type="button" class="btn btn-primary" id="alertOkButton" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- biblioteca de máscaras de campos -->
   <script
     defer src="https://unpkg.com/vanilla-masker@1.1.1/build/vanilla-masker.min.js"
@@ -84,6 +101,11 @@
   </script>
   <!-- biblioteca Tom Select -->
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+  <script 
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous">
+  </script>
   <script type="module" src="js/ui/renderUsuarios.js"></script>
   <!-- script principal por último -->
   <script defer type="module" src="js/mainPesquisa.js"></script>
