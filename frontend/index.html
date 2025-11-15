@@ -9,17 +9,15 @@
   rel="stylesheet"
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
   crossorigin="anonymous"/>
-  <!-- <link rel="stylesheet" href="/css/styles.css"> -->
- <!-- <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="> -->
  <link 
     href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.css" 
     rel="stylesheet"/>
- <link rel="stylesheet" href="./css/stylesBoot.css">
+ <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body class="bg-light">
   <header class="navbar bg-body-tertiary shadow-sm mb-4">
     <div class="container-fluid d-flex justify-content-start">
-      <img src="./img/tecnologia_mobile.png" alt="Logo Gestão de Usuários" 
+      <img src="./assets/img/tecnologia_mobile.png" alt="Logo Gestão de Usuários" 
         class="me-2 rounded img-fluid" style="max-width: 40px; height: auto;">    
       <span class="navbar-brand mb-0 h5 fw-semibold text-secondary">Gestão de Usuários</span>
     </div>
@@ -115,8 +113,8 @@
   </script>
   <!-- biblioteca Tom Select -->
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-  <script type="module" src="js/ui/renderUsuarios.js"></script>
+  <script type="module" src="./src/ui/render-usuarios.component.js"></script>
   <!-- script principal por último -->
-  <script defer type="module" src="js/mainPesquisa.js"></script>
+  <script defer type="module" src="./src/main/pesquisa.main.js"></script>
 </body>
 </html>

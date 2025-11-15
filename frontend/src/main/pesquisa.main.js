@@ -1,11 +1,10 @@
-import { initPesquisaPage } from './pages/pesquisaPage.js';
-import { configurarDelecaoDeUsuarios } from './pages/pesquisaPage.js';
-import { aplicarMascaraCPF, limparFormulario } from './utils/util.js';
-import { carregarSelectMultiplo, carregarSelect, selectFilter } from './utils/carregarSelect.js';
-import { setupModalFocusFix } from './utils/modalFocusHandler.js';
-//import { initModalEditarUsuario } from './pages/modalEditarUsuario.js';
+import { initPesquisaPage, configurarDelecaoDeUsuarios } from '../pages/pesquisa/pesquisa.page.js';
+import { aplicarMascaraCPF, limparFormulario } from '../utils/util.util.js';
+import { carregarSelectMultiplo, carregarSelect, selectFilter } from '../utils/carregar-select.util.js';
+import { setupModalFocusFix } from '../utils/modal-focus-handler.util.js';
+// import { initModalEditarUsuario } from '../pages/usuarios/modal-editar-usuario.page.js';
 
-import { API_BASE } from '../src/config.js';
+import { API_BASE } from '../config.js';
 
 /*document.addEventListener('DOMContentLoaded', carregarSetores); /*chama a função carregarSetores depois que o HTML temrina de carregar*/
 document.addEventListener('DOMContentLoaded', async () => {
@@ -35,6 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   //Listener Botão novoUsuario
   const btnPesquisa = document.getElementById('novoUsuario');
   btnPesquisa.addEventListener('click', (e) => {
-    window.location.href = "./pages/usuarioform.html";
+    window.location.href = "src/pages/usuarios/usuarioform.html";
   });
 });

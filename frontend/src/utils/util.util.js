@@ -1,4 +1,4 @@
-import { showAlert } from './showAlert.js';
+import { showAlert } from './show-alert.util.js';
 
 // Função para limpar formulário
 export function limparFormulario() {

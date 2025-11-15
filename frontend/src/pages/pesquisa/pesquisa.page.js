@@ -1,9 +1,9 @@
-import { getUsuarios } from '../api/usuariosApi.js';
-import { deleteUsuario } from '../api/usuariosApi.js';
-import { renderTabelaUsuarios } from '../ui/renderUsuarios.js';
-import { setUsuariosCache } from '../utils/usuariosCache.js';
-import { showAlert, showConfirm } from '../utils/showAlert.js';
-import { limparFormulario } from '../utils/util.js';
+import { getUsuarios, deleteUsuario } from '../../api/usuarios.api.js';
+import { renderTabelaUsuarios } from '../../ui/render-usuarios.component.js';
+import { setUsuariosCache } from '../../utils/usuarios-cache.util.js';
+import { showAlert, showConfirm } from '../../utils/show-alert.util.js';
+import { limparFormulario } from '../../utils/util.util.js';
+
 
 //ativa o listener botão pesquisar e ao clicar chama o executarPesquisa
 export function initPesquisaPage() {
@@ -122,6 +122,6 @@ export function configurarEdicaoDeUsuarios(e) {
   // Faz o redirecionamento para a página de formulário
   // passando o ID na querystring
   //window.location.href = `/pages/usuarioform.html?id=${userId}`;
-  window.location.href = "pages/usuarioform.html?id=" + userId;
+  window.location.href = "src/pages/usuarios/usuarioform.html?id=" + userId;
 
 }

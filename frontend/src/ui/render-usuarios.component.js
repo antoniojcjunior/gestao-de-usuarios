@@ -1,5 +1,5 @@
 
-import { formatarMoedaBR, escapeHtml, formatCpf, formatDateToBR } from '../utils/util.js';
+import { formatarMoedaBR, escapeHtml, formatCpf, formatDateToBR } from '../utils/util.util.js';
 
 export function renderTabelaUsuarios(containerEl, usuarios) {
   if (!containerEl) return;

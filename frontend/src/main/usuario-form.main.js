@@ -1,10 +1,11 @@
-import { incluirUsuario } from './pages/usuariosPage.js';
-import { preencherUFs } from './utils/localizacao.js';
-import { aplicarMascaraCPF } from './utils/util.js';
-import { carregarSelect, selectFilter } from './utils/carregarSelect.js';
-import { ajustarCampoDataParaMobile } from './utils/dataMobile.js';
-import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from './utils/util.js';
-import { getUsuarioPorId } from './api/usuariosApi.js';
+import { incluirUsuario } from '../pages/usuarios/usuarios.page.js';
+import { preencherUFs } from '../utils/localizacao.util.js';
+import { aplicarMascaraCPF } from '../utils/util.util.js';
+import { carregarSelect, selectFilter } from '../utils/carregar-select.util.js';
+import { ajustarCampoDataParaMobile } from '../utils/data-mobile.util.js';
+import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from '../utils/util.util.js';
+import { getUsuarioPorId } from '../api/usuarios.api.js';
+
 
 const API_BASE = window.location.origin.includes('vercel.app')
   ? '' // produção: chama via rewrite VERCEL.JSON (/api/...)
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   const btnPesquisa = document.getElementById('voltar');
   btnPesquisa.addEventListener('click', (e) => {
-    window.location.href = "../index.html";
+    window.location.href = "../../../index.html";
   });
 
   // Detecta se existe um ID na URL

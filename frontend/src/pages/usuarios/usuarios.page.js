@@ -1,8 +1,9 @@
 // orquestração da tela (lê DOM, valida, chama API)
-import { postUsuario } from '../api/usuariosApi.js';
-import { validarCamposObrigatorios } from '../utils/util.js';
-import { limparFormulario } from '../utils/util.js';
-import { showConfirm, showAlert } from '../utils/showAlert.js';
+import { postUsuario } from '../../api/usuarios.api.js';
+import { validarCamposObrigatorios } from '../../utils/util.util.js';
+import { limparFormulario } from '../../utils/util.util.js';
+import { showConfirm, showAlert } from '../../utils/show-alert.util.js';
+
 
 export async function incluirUsuario() {
 

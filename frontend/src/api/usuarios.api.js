@@ -1,6 +1,6 @@
 // apenas as chamadas ao back
 
-import { API_BASE } from '../../src/config.js';
+import { API_BASE } from '../config.js';
 
 //Incluir usuário
 export async function postUsuario(dadosEnviados) {
