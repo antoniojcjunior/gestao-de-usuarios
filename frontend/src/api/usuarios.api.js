@@ -21,7 +21,7 @@ export async function postUsuario(dadosEnviados) {
 }
 
 //Pesquisar usuarios
-export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = []) {
+export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setorId = '') {
   // usa caminho relativo ao mesmo host/porta do back
   const urlBase = `${API_BASE}/api/usuarios`;
 
@@ -40,6 +40,10 @@ export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = []) {
   if (turnosIds && turnosIds.length > 0) {
     // Junta o array de IDs em uma string separada por vírgulas (ex: "1,3,5")
     url.searchParams.append('turnos', turnosIds.join(',')); // Usa 'turnos' como nome do parâmetro
+  }
+
+  if (setorId) {
+    url.searchParams.append('setor', setorId);
   }
 
   const resp = await fetch(url.href);

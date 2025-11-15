@@ -157,7 +157,8 @@ app.get('/api/usuarios', async (req, res) => {
     const cpfFiltro = req.query.cpf;
     const regiaoFiltro = req.query.regiao;
     const turnosFiltro = req.query.turnos;
-
+    const setorFiltro = req.query.setor;
+  
       // 1. Definição do SQL com JOIN
     let sql = `
       SELECT 
@@ -170,6 +171,7 @@ app.get('/api/usuarios', async (req, res) => {
         trn.turno,
         reg.nome as nome_regiao,
         setor.nome as nome_setor,
+        setor.sigla as sigla_setor,
         usr.data_nascimento, 
         usr.remuneracao
       FROM 
@@ -205,11 +207,18 @@ if (turnosFiltro && turnosFiltro.length > 0) {
     // O operador IN do SQL aceita esta lista de valores.
     // Usamos 'turnosFiltro' diretamente aqui, pois ele é a lista de valores.
     conditions.push(`usr.turno_id IN (${turnosFiltro})`);
-    
     // NOTA IMPORTANTE: Por estarmos injetando a lista de IDs de um SELECT 
     // (que assumimos ser sanitizados por serem numéricos), podemos usar IN.
     // No entanto, para segurança máxima, seria ideal mapear os valores e usar placeholders ($1, $2, etc.)
     // Vamos usar a injeção simples com IN(1,3,5) por enquanto, focando na funcionalidade.
+}
+
+// 4. Filtro por setor
+if (setorFiltro && setorFiltro.length > 0) {
+    // Adiciona a condição ao array e o valor ao array de parâmetros
+    // NOTA: Assumimos que o input do frontend envia o ID do filtro.
+    conditions.push(`usr.setor_id = $${params.length + 1}`);
+    params.push(setorFiltro);
 }
 
 // 3. Constrói a cláusula WHERE final
@@ -220,7 +229,8 @@ if (conditions.length > 0) {
 
 // 4. Adiciona a ordenação
 sql += ` ORDER BY usr.nome ASC`;
-
+console.log(sql);
+console.log('PARAMS:', params);
   try {
     const { rows } = await pool.query(sql, params);
     res.json(rows);

@@ -31,7 +31,9 @@ export async function executarPesquisa() {
   cpf = cpf.replace(/\D/g, '');
   const regiaoInput = document.getElementById('regiao');
   let regiao = regiaoInput.value;
-
+  const setorInput = document.getElementById('setor');
+  let setor = setorInput.value;
+  
   // <<-- NOVO: Captura dos valores do Tom Select -->>
   // O Select nativo é atualizado automaticamente pelo Tom Select/bibliotecas modernas.
   // Basta pegar o valor do elemento HTML original!
@@ -39,7 +41,7 @@ export async function executarPesquisa() {
   // Coleta todos os valores selecionados. Retorna um Array de strings.
   const turnosSelecionados = Array.from(turnosSelect.selectedOptions).map(option => option.value);
   try {
-    const usuarios = await getUsuarios(cpf, regiao, turnosSelecionados); //resultado da função getUsuarios sendo colocado no array usuarios
+    const usuarios = await getUsuarios(cpf, regiao, turnosSelecionados, setor); //resultado da função getUsuarios sendo colocado no array usuarios
     console.log('🔎 Usuários retornados:', usuarios);
 
     // Atualiza contador (se existir no HTML)

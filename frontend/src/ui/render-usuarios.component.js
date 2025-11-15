@@ -35,6 +35,7 @@ export function renderTabelaUsuarios(containerEl, usuarios) {
             <th class="text-center" scope="col">CPF</th>
             <th class="text-center" scope="col">Turno</th>
             <th class="text-center" scope="col">Região</th>
+            <th class="text-center" scope="col">Setor</th>
             <th class="text-center" scope="col">Data de nascimento</th>
             <th class="text-center" scope="col">Remuneração</th>
             <th class="text-center" scope="col">Ações</th>
@@ -50,6 +51,7 @@ export function renderTabelaUsuarios(containerEl, usuarios) {
       <td class="text-center">${formatCpf(u.cpf)}</td>
       <td class="text-center">${u.turno ?? ''}</td>
       <td class="text-center">${u.nome_regiao ?? ''}</td>
+      <td class="text-center">${u.sigla_setor ?? ''}</td>
       <td class="text-center">${formatDateToBR(u.data_nascimento ?? '')}</td>
       <td class="text-end">${formatarMoedaBR(u.remuneracao)}</td>
       <td class="text-center acoes">
