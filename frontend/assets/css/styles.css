@@ -10,12 +10,6 @@ section.card {
     display: none; 
 }
 
-.acoes {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;    /* controla o espaço entre ícones */
-}
 .icon {
   width: 18px;
   height: 18px;
@@ -122,4 +116,25 @@ select option {
 /*o label do select multiplo TS vem por padrao sem margem, adicionei para ficar alinhado com os demais*/
 #turnos-multi-ts-label {
   margin-bottom: 8px !important;
+}
+
+@media (max-width: 768px) {
+  /* 1. Alinhamento vertical para todas as células de tabela (mantendo a correção de altura) */
+  .table-usuarios td {
+    vertical-align: middle;
+  }
+  
+  /* 2. Aplica o Flexbox no contêiner dos botões, não na TD */
+  .acoes-wrapper {
+    display: flex;
+    
+    /* Centraliza os botões */
+    justify-content: center; 
+    align-items: center; /* Garante que estejam alinhados entre si */
+  }
+
+  /* Opcional: Adiciona um pequeno espaço entre os botões */
+  .acoes-wrapper button:not(:last-child) {
+    margin-right: 8px; 
+  }
 }
