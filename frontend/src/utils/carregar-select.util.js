@@ -79,6 +79,9 @@ export async function carregarSelectMultiplo({
     const el = document.getElementById(selectId);
     if (!el) return;
 
+    // pega o fallback, se existir (id no padrão: <id>-fallback)
+    const fallback = document.getElementById(`${selectId}-fallback`);
+
     // se já havia um Tom Select, destruir antes de recriar
     if (el.tomselect) {
       el.tomselect.destroy();
@@ -110,6 +113,16 @@ export async function carregarSelectMultiplo({
         option: (data, escape) => `<div>${escape(data.text)}</div>`
       }
     });
+
+    // troca visual – esconde fallback e mostra o Tom Select pronto
+    if (fallback) {
+      fallback.classList.add('d-none');   // esconde o select original Bootstrap
+    }
+    // mostra o wrapper do Tom Select (que herdou d-none do select original)
+    if (tom.wrapper) {
+      tom.wrapper.classList.remove('d-none');
+    }
+    // o select original pode continuar escondido, o Tom Select já usa ts-hidden-accessible
 
     // placeholder some automaticamente após selecionar
     tom.on('item_add', () => {

@@ -49,9 +49,18 @@
               </select>
             </div>
             <div class="col-md-6">
-              <label for="turnos-multi">Turno:</label>
-              <select data-tomselect tomselect-multi id="turnos-multi" multiple="multiple" style="width:260px">
+              <label for="turnos-multi" class="form-label">Turno:</label>
+              <!-- 1) Fallback (Bootstrap) — aparece imediatamente -->
+              <select class="form-select" id="turnos-multi-fallback" 
+                aria-label="Turno (carregando)">
                 <option value="" selected disabled>Carregando...</option>
+              </select>
+              <!-- 2) Select real do Tom Select (começa oculto) -->
+              <select class="form-select d-none" id="turnos-multi" name="turnos"
+                data-tomselect multiple style="width:260px"
+                aria-label="Selecione o turno">
+                <!-- Aqui você coloca as opções reais, ou deixa o JS carregar -->
+                <option value="">Selecione</option>
               </select>
             </div>
           </div>
