@@ -163,10 +163,10 @@ app.get('/api/usuarios', async (req, res) => {
     if (nomeFiltro === '%%' || nomeFiltro === '%' || nomeFiltro.trim() === '') {
       nomeFiltro = null;
     }    
-    console.log(nomeFiltro);
+    //console.log(nomeFiltro);
     const { dataNascInicio, dataNascFim } = req.query;
-    console.log(dataNascInicio);
-    console.log(dataNascFim);
+    //console.log(dataNascInicio);
+    //console.log(dataNascFim);
       // 1. Definição do SQL com JOIN
     let sql = `
       SELECT 
@@ -252,7 +252,7 @@ if (dataNascInicio && dataNascFim) { //quando ambas são preenchidas
 }
 
 
-console.log('CONDIÇÕES:', conditions);
+//console.log('CONDIÇÕES:', conditions);
 // 3. Constrói a cláusula WHERE final
 if (conditions.length > 0) {
     // Se houver condições, adiciona ' WHERE ' e junta as condições com ' AND '
@@ -261,8 +261,8 @@ if (conditions.length > 0) {
 
 // 4. Adiciona a ordenação
 sql += ` ORDER BY usr.nome ASC`;
-console.log(sql);
-console.log('PARAMS:', params);
+//console.log(sql);
+//console.log('PARAMS:', params);
   try {
     const { rows } = await pool.query(sql, params);
     res.json(rows);
