@@ -118,6 +118,24 @@ export function limitaDataNascimento(inputId) {
     return;
   }
 }
+
+// Converte datas para formato ISO (YYYY-MM-DD) para comparação
+function normalizaData(valor) {
+  if (!valor) return '';
+
+  // Caso mobile: dd/mm/aaaa
+  if (valor.includes('/')) {
+    const [dia, mes, ano] = valor.split('/');
+    if (!dia || !mes || !ano) return '';
+    const dia2 = dia.padStart(2, '0');
+    const mes2 = mes.padStart(2, '0');
+    return `${ano}-${mes2}-${dia2}`; // YYYY-MM-DD
+  }
+
+  // Caso desktop: já vem como YYYY-MM-DD
+  return valor;
+}
+
 //Limita a data nascimento a partir do valor inicial digitado
 export function restingeIntervaloDatas(idInicio, idFim) {
   const inicioInput = document.getElementById(idInicio);
@@ -125,26 +143,39 @@ export function restingeIntervaloDatas(idInicio, idFim) {
 
   if (!inicioInput || !fimInput) return;
 
-  // Quando o usuário mexer na data final, valida o intervalo
-  fimInput.addEventListener('change', () => {
-    const inicio = inicioInput.value; // formato YYYY-MM-DD
-    const fim    = fimInput.value;   // formato YYYY-MM-DD
+  // valida quando o usuário termina de mexer na data final
+  fimInput.addEventListener('blur', () => {
+    const inicioRaw = inicioInput.value; // pode ser YYYY-MM-DD ou dd/mm/aaaa
+    const fimRaw    = fimInput.value;
 
-    if (inicio && fim && fim < inicio) {
-      //alert('A data final não pode ser anterior à data inicial.');
+    if (!fimRaw) return;
+
+    const inicio = normalizaData(inicioRaw);
+    const fim    = normalizaData(fimRaw);
+
+    if (!inicio || !fim) return;
+
+    if (fim < inicio) {
       showAlert('A data final não pode ser anterior à data inicial.');
-      fimInput.value = ''; // limpa para o usuário escolher de novo
+      fimInput.value = '';
       fimInput.focus();
     }
   });
 
-  // Opcional: se o usuário mudar a data de início depois de já ter preenchido a fim
-  inicioInput.addEventListener('change', () => {
-    const inicio = inicioInput.value;
-    const fim    = fimInput.value;
+  // se o usuário mudar a data de início depois de já ter preenchido a fim
+  inicioInput.addEventListener('blur', () => {
+    const inicioRaw = inicioInput.value;
+    const fimRaw    = fimInput.value;
 
-    if (inicio && fim && fim < inicio) {
-      // aqui não precisa alertar de novo, só limpar ou ajustar
+    if (!inicioRaw || !fimRaw) return;
+
+    const inicio = normalizaData(inicioRaw);
+    const fim    = normalizaData(fimRaw);
+
+    if (!inicio || !fim) return;
+
+    if (fim < inicio) {
+      // aqui dá pra só limpar silenciosamente
       fimInput.value = '';
     }
   });

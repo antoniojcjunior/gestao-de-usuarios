@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   ajustarCampoDataParaMobile(dataNascInicioEl);
   ajustarCampoDataParaMobile(dataNascFimEl);
+  
   await Promise.all([
   carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor', montarLabel: (item) => `${item.sigla} — ${item.nome}` }),
   carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' }),
