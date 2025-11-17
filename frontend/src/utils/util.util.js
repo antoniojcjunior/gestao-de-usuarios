@@ -100,18 +100,56 @@ export function aplicarMascaraMonetaria(elementId = 'remuneracao', options = {})
   console.log(`Máscara monetária aplicada ao elemento com ID: ${elementId}`);
 }
 //Limita a data nascimento menor do que hoje
-export function limitaDataNascimento() {
+/**
+ * Limita o valor máximo de um campo de data (input type="date") para a data de hoje
+ * e verifica se o valor atual não está no futuro.
+ *
+ * @param {string} inputId O ID do elemento input de data a ser tratado.
+ */
+export function limitaDataNascimento(inputId) {
   // gera data de hoje no formato AAAA-MM-DD
   const hoje = new Date().toISOString().split('T')[0];
   // aplica como valor máximo do input
-  document.getElementById('data_nascimento').setAttribute('max', hoje);
+  document.getElementById(inputId).setAttribute('max', hoje);
 
-  const data_nascimento = document.getElementById('data_nascimento').value;
+  const data_nascimento = document.getElementById(inputId).value;
   if (data_nascimento && data_nascimento > new Date().toISOString().split('T')[0]) {
     alert('A data de nascimento não pode ser no futuro.');
     return;
   }
 }
+//Limita a data nascimento a partir do valor inicial digitado
+export function restingeIntervaloDatas(idInicio, idFim) {
+  const inicioInput = document.getElementById(idInicio);
+  const fimInput    = document.getElementById(idFim);
+
+  if (!inicioInput || !fimInput) return;
+
+  // Quando o usuário mexer na data final, valida o intervalo
+  fimInput.addEventListener('change', () => {
+    const inicio = inicioInput.value; // formato YYYY-MM-DD
+    const fim    = fimInput.value;   // formato YYYY-MM-DD
+
+    if (inicio && fim && fim < inicio) {
+      //alert('A data final não pode ser anterior à data inicial.');
+      showAlert('A data final não pode ser anterior à data inicial.');
+      fimInput.value = ''; // limpa para o usuário escolher de novo
+      fimInput.focus();
+    }
+  });
+
+  // Opcional: se o usuário mudar a data de início depois de já ter preenchido a fim
+  inicioInput.addEventListener('change', () => {
+    const inicio = inicioInput.value;
+    const fim    = fimInput.value;
+
+    if (inicio && fim && fim < inicio) {
+      // aqui não precisa alertar de novo, só limpar ou ajustar
+      fimInput.value = '';
+    }
+  });
+}
+
 //Valida se todos os campos foram preenchidos e apresenta msg caso nao tenham sido
 export function validarCamposObrigatorios(campos) {
 for (const campo of campos) {

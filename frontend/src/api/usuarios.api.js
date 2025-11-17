@@ -21,7 +21,8 @@ export async function postUsuario(dadosEnviados) {
 }
 
 //Pesquisar usuarios
-export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setorId = '', nome = '') {
+export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setorId = '', 
+  nome = '', dataNascInicio = '', dataNascFim = '') {
   // usa caminho relativo ao mesmo host/porta do back
   const urlBase = `${API_BASE}/api/usuarios`;
 
@@ -50,6 +51,13 @@ export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setor
     url.searchParams.append('nome', nome);
   }
 
+  if (dataNascInicio) {
+    url.searchParams.append('dataNascInicio', dataNascInicio);
+  }
+   
+  if (dataNascFim) {
+    url.searchParams.append('dataNascFim', dataNascFim);
+  }
   const resp = await fetch(url.href);
   if (!resp.ok) {
     throw new Error(`Erro ao buscar usuários (${resp.status})`);

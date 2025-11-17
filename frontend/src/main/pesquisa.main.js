@@ -1,6 +1,7 @@
 import { initPesquisaPage, configurarDelecaoDeUsuarios } from '../pages/pesquisa/pesquisa.page.js';
-import { aplicarMascaraCPF, limparFormulario } from '../utils/util.util.js';
+import { aplicarMascaraCPF, limparFormulario, limitaDataNascimento, restingeIntervaloDatas } from '../utils/util.util.js';
 import { carregarSelectMultiplo, carregarSelect, selectFilter } from '../utils/carregar-select.util.js';
+import { ajustarCampoDataParaMobile } from '../utils/data-mobile.util.js';
 import { setupModalFocusFix } from '../utils/modal-focus-handler.util.js';
 // import { initModalEditarUsuario } from '../pages/usuarios/modal-editar-usuario.page.js';
 
@@ -11,6 +12,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   initPesquisaPage();//essa função ativa o listener do botão pesquisar
   configurarDelecaoDeUsuarios();//essa função ativa o listener do botão Lixeira apagar
   aplicarMascaraCPF();
+  
+  const dataNascInicioEl = document.getElementById('data_nascimento_inicio');
+  const dataNascFimEl = document.getElementById('data_nascimento_fim');
+  
+  limitaDataNascimento(dataNascInicioEl.id);
+  limitaDataNascimento(dataNascFimEl.id);
+
+  restingeIntervaloDatas(dataNascInicioEl.id, dataNascFimEl.id);
+  
+  ajustarCampoDataParaMobile(dataNascInicioEl);
+  ajustarCampoDataParaMobile(dataNascFimEl);
   await Promise.all([
   carregarSelect({ url: `${API_BASE}/api/setores`, selectId: 'setor', montarLabel: (item) => `${item.sigla} — ${item.nome}` }),
   carregarSelect({ url: `${API_BASE}/api/regioes`, selectId: 'regiao' }),

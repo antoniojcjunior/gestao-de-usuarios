@@ -164,7 +164,9 @@ app.get('/api/usuarios', async (req, res) => {
       nomeFiltro = null;
     }    
     console.log(nomeFiltro);
-
+    const { dataNascInicio, dataNascFim } = req.query;
+    console.log(dataNascInicio);
+    console.log(dataNascFim);
       // 1. Definição do SQL com JOIN
     let sql = `
       SELECT 
@@ -234,6 +236,21 @@ if (setorFiltro && setorFiltro.length > 0) {
      conditions.push(`unaccent(usr.nome) ILIKE unaccent($${params.length + 1})`);
      params.push(nomeFiltro);
  }
+
+// 6. Filtro por data de nascimento
+if (dataNascInicio && dataNascFim) { //quando ambas são preenchidas
+    conditions.push(`usr.data_nascimento BETWEEN $${params.length + 1} AND $${params.length + 2}`);
+    params.push(dataNascInicio, dataNascFim);
+
+} else if (dataNascInicio) { //somente data inicio preenchida
+    conditions.push(`usr.data_nascimento >= $${params.length + 1}`);
+    params.push(dataNascInicio);
+
+} else if (dataNascFim) {
+    conditions.push(`usr.data_nascimento <= $${params.length + 1}`);
+    params.push(dataNascFim);
+}
+
 
 console.log('CONDIÇÕES:', conditions);
 // 3. Constrói a cláusula WHERE final

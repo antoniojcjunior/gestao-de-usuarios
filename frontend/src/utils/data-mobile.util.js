@@ -1,5 +1,5 @@
-export function ajustarCampoDataParaMobile() {
-  const dataInput = document.getElementById('data_nascimento');
+export function ajustarCampoDataParaMobile(dataInput) {
+  
   if (!dataInput) return;
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

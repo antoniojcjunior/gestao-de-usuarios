@@ -44,7 +44,13 @@ export async function executarPesquisa() {
   let setor = setorInput.value;
   const nomeInput = document.getElementById('nome');
   let nome = `%${nomeInput.value}%`;
-  console.log(nome);
+  //console.log(nome);
+  const dataNascInicioInput = document.getElementById('data_nascimento_inicio');
+  let dataNascInicio = dataNascInicioInput.value;
+  console.log(dataNascInicio);
+  const dataNascFimInput = document.getElementById('data_nascimento_fim');
+  let dataNascFim = dataNascFimInput.value;
+  console.log(dataNascFim);
 
   // <<-- NOVO: Captura dos valores do Tom Select -->>
   // O Select nativo é atualizado automaticamente pelo Tom Select/bibliotecas modernas.
@@ -53,7 +59,7 @@ export async function executarPesquisa() {
   // Coleta todos os valores selecionados. Retorna um Array de strings.
   const turnosSelecionados = Array.from(turnosSelect.selectedOptions).map(option => option.value);
   try {
-    const usuarios = await getUsuarios(cpf, regiao, turnosSelecionados, setor, nome); //resultado da função getUsuarios sendo colocado no array usuarios
+    const usuarios = await getUsuarios(cpf, regiao, turnosSelecionados, setor, nome, dataNascInicio, dataNascFim); //resultado da função getUsuarios sendo colocado no array usuarios
     console.log('🔎 Usuários retornados:', usuarios);
 
     // Atualiza contador (se existir no HTML)
