@@ -158,7 +158,13 @@ app.get('/api/usuarios', async (req, res) => {
     const regiaoFiltro = req.query.regiao;
     const turnosFiltro = req.query.turnos;
     const setorFiltro = req.query.setor;
-  
+    let nomeFiltro = req.query.nome;
+    // Se vier "%%" ou "%" apenas, considerar como filtro vazio
+    if (nomeFiltro === '%%' || nomeFiltro === '%' || nomeFiltro.trim() === '') {
+      nomeFiltro = null;
+    }    
+    console.log(nomeFiltro);
+
       // 1. Definição do SQL com JOIN
     let sql = `
       SELECT 
@@ -183,14 +189,14 @@ app.get('/api/usuarios', async (req, res) => {
       INNER JOIN 
           setores setor ON usr.setor_id = setor.id`;
 
-    const params = [];
+    const params = []; //array de parametros passados na pesquisa, ex: o nº do CPF e o ID do setor
     let conditions = [];// Array para armazenar as cláusulas WHERE
 
 // 1. Filtro por CPF
 if (cpfFiltro && cpfFiltro.length > 0) {
     // Adiciona a condição ao array e o valor ao array de parâmetros
-    conditions.push(`usr.cpf = $${params.length + 1}`);
-    params.push(cpfFiltro);
+    conditions.push(`usr.cpf = $${params.length + 1}`); //inclui condições que serão utilizadas no where
+    params.push(cpfFiltro); //inclui o nº do CPF no array params
 }
 
 // 2. Filtro por Região
@@ -221,6 +227,15 @@ if (setorFiltro && setorFiltro.length > 0) {
     params.push(setorFiltro);
 }
 
+// 5. Filtro por nome
+ if (nomeFiltro && nomeFiltro.length > 0) {
+//     // Adiciona a condição ao array e o valor ao array de parâmetros
+//     // NOTA: Assumimos que o input do frontend envia o ID do filtro.
+     conditions.push(`unaccent(usr.nome) ILIKE unaccent($${params.length + 1})`);
+     params.push(nomeFiltro);
+ }
+
+console.log('CONDIÇÕES:', conditions);
 // 3. Constrói a cláusula WHERE final
 if (conditions.length > 0) {
     // Se houver condições, adiciona ' WHERE ' e junta as condições com ' AND '

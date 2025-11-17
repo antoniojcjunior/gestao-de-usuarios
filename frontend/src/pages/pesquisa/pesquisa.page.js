@@ -9,11 +9,20 @@ import { limparFormulario } from '../../utils/util.util.js';
 export function initPesquisaPage() {
   
 
-const btn = document.getElementById('pesquisar');
+const formPesquisa = document.getElementById('formulario');
+
+if (formPesquisa) {
+  formPesquisa.addEventListener('submit', function (event) {
+    event.preventDefault(); // impede reload da página
+    executarPesquisa();     // chama sua função
+  });
+}
+
+// const btn = document.getElementById('pesquisar');
  
-  if (btn) {
-    btn.addEventListener('click', executarPesquisa);//ouvindo o botão pesquisa
-  }
+//   if (btn) {
+//     btn.addEventListener('click', executarPesquisa);//ouvindo o botão pesquisa
+//   }
 
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.btn-editar');
@@ -33,7 +42,10 @@ export async function executarPesquisa() {
   let regiao = regiaoInput.value;
   const setorInput = document.getElementById('setor');
   let setor = setorInput.value;
-  
+  const nomeInput = document.getElementById('nome');
+  let nome = `%${nomeInput.value}%`;
+  console.log(nome);
+
   // <<-- NOVO: Captura dos valores do Tom Select -->>
   // O Select nativo é atualizado automaticamente pelo Tom Select/bibliotecas modernas.
   // Basta pegar o valor do elemento HTML original!
@@ -41,7 +53,7 @@ export async function executarPesquisa() {
   // Coleta todos os valores selecionados. Retorna um Array de strings.
   const turnosSelecionados = Array.from(turnosSelect.selectedOptions).map(option => option.value);
   try {
-    const usuarios = await getUsuarios(cpf, regiao, turnosSelecionados, setor); //resultado da função getUsuarios sendo colocado no array usuarios
+    const usuarios = await getUsuarios(cpf, regiao, turnosSelecionados, setor, nome); //resultado da função getUsuarios sendo colocado no array usuarios
     console.log('🔎 Usuários retornados:', usuarios);
 
     // Atualiza contador (se existir no HTML)

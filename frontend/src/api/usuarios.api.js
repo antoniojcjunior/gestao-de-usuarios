@@ -21,7 +21,7 @@ export async function postUsuario(dadosEnviados) {
 }
 
 //Pesquisar usuarios
-export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setorId = '') {
+export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setorId = '', nome = '') {
   // usa caminho relativo ao mesmo host/porta do back
   const urlBase = `${API_BASE}/api/usuarios`;
 
@@ -44,6 +44,10 @@ export async function getUsuarios(cpf = '', regiaoId = '', turnosIds = [], setor
 
   if (setorId) {
     url.searchParams.append('setor', setorId);
+  }
+
+  if (nome) {
+    url.searchParams.append('nome', nome);
   }
 
   const resp = await fetch(url.href);

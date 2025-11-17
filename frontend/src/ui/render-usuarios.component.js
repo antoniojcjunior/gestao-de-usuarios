@@ -85,4 +85,8 @@ export function renderTabelaUsuarios(containerEl, usuarios) {
     </div>
 `;
 containerEl.innerHTML = fullTableHtml; //insere o codigo no HTML
+
+const section = document.getElementById('resultados-tabela');
+// 3. rolar para a área da tabela
+section.scrollIntoView({ behavior: 'smooth' });
 }
