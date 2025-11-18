@@ -16,10 +16,30 @@ export function showAlert(message) {
     // Injeta a mensagem no corpo do Modal
     modalMessage.innerHTML = message;
 
-    // Cria e exibe a instância do Modal do Bootstrap
-    // Certifique-se de que a variável 'bootstrap' está acessível globalmente (ela vem do bootstrap.bundle.js)
-    const validationModal = new bootstrap.Modal(modalElement);
-    validationModal.show();
+    const confirmationModal = new window.bootstrap.Modal(modalElement);
+    
+    return new Promise(resolve => {
+        // Exibe o modal
+        confirmationModal.show();
+
+        // Listener para o botão 'Sim'
+        alertOkButton.onclick = () => {
+            confirmationModal.hide(); // Esconde o modal
+            resolve(true); // Resolve a Promise com TRUE (Confirmado)
+        };
+
+        
+        //confirmNoButton.onclick = handleCancel;
+        // Garante que o clique fora do modal também conte como Cancelar
+        modalElement.addEventListener('hidden.bs.modal', function onHidden() {
+            // Só resolve se o modal foi fechado e a Promise ainda não foi resolvida (pelo 'Sim')
+            if (resolve) {
+                resolve(false); 
+            }
+            // Remove o listener para evitar múltiplas chamadas
+            modalElement.removeEventListener('hidden.bs.modal', onHidden);
+        });
+    });
 }
 
 // Função de Confirmação

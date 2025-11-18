@@ -139,3 +139,14 @@ select option {
   }
 }
 
+  .bg-alteracao {
+    background-color: #dcecdc !important;
+  }
+  .body-bg-alteracao {
+    background-color: #A1B0AB !important;
+  }
+  
+  .boldTitle {
+  /*font-weight: bold !important;*/
+  color: #000 !important  ;
+  }

@@ -98,8 +98,6 @@ export async function getUsuarioPorId(id) {
     throw err; // permite que o caller trate o erro
   }
 }
-
-
 /**
  * Envia uma requisição DELETE para a API e remove um usuário pelo ID.
  * @param {string | number} usuarioId O ID do usuário a ser deletado.
@@ -138,4 +136,43 @@ export async function deleteUsuario(usuarioId) {
         console.error('Erro de rede/execução ao tentar deletar o usuário:', error);
         return false;
     }
+}
+
+export async function atualizarUsuario(id, usuario) {
+  // 1. Garante que o ID e os dados existam
+  console.log('ID da API', id);
+  if (!id || !usuario) {
+    throw new Error('ID ou dados do usuário ausentes para atualização.');
+  }
+
+  try {
+    const resposta = await fetch(`${API_BASE}/api/usuarios/${id}`, {
+      method: 'PUT', // Especifica o método HTTP
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      // Converte o objeto JavaScript em uma string JSON para o corpo da requisição
+      body: JSON.stringify(usuario) 
+    });
+
+    if (!resposta.ok) {
+      const erro = await resposta.json().catch(() => ({}));
+      // Trata erros 400, 404, 500, etc.
+      throw new Error(erro.error || 'Falha na atualização do usuário.');
+    }
+
+    // O PUT tipicamente retorna o registro atualizado (Status 200) ou apenas sucesso (204 No Content)
+    // Se o backend retornar 204, a chamada 'await resposta.json()' pode falhar.
+    // Para simplificar, assumimos que o backend pode retornar 200 com o objeto atualizado.
+    if (resposta.status === 200) {
+        return await resposta.json();
+    }
+    
+    // Retorna true em caso de sucesso sem corpo (204 No Content)
+    return true; 
+
+  } catch (err) {
+    console.error('Erro em atualizarUsuario:', err);
+    throw err; // Permite que o caller trate o erro e exiba a mensagem
+  }
 }

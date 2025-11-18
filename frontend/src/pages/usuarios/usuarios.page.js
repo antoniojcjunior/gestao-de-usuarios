@@ -1,11 +1,11 @@
 // orquestração da tela (lê DOM, valida, chama API)
-import { postUsuario } from '../../api/usuarios.api.js';
+import { postUsuario, atualizarUsuario } from '../../api/usuarios.api.js';
 import { validarCamposObrigatorios } from '../../utils/util.util.js';
 import { limparFormulario } from '../../utils/util.util.js';
 import { showConfirm, showAlert } from '../../utils/show-alert.util.js';
 
 
-export async function incluirUsuario() {
+export async function processarFormularioUsuario(userId) {
 
   // 1) ler campos
   const nome            = (document.getElementById('nome')?.value || '').trim();
@@ -32,7 +32,11 @@ export async function incluirUsuario() {
     if (!validarCamposObrigatorios(campos)) return;
   }
 
-  const isConfirmed = await showConfirm("Confirma inclusão?");  
+  // Define a Ação e a Mensagem de Confirmação
+  console.log('ID do usuario', userId);
+  const acao = userId ? 'Atualização' : 'Inclusão';
+  const isConfirmed = await showConfirm(`Confirma ${acao}?`);
+
   if (!isConfirmed) {
       // Se o usuário clicou em 'Não' (isConfirmed é false),
       // SIMPLESMENTE TERMINAMOS A FUNÇÃO AQUI:
@@ -41,19 +45,38 @@ export async function incluirUsuario() {
   }
   // 3) montar payload
   const dadosEnviados = { nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao };
-  console.log('📦 Objeto JS montado para enviar ao servidor:', dadosEnviados);
+  console.log(`Objeto JS montado para ${acao}:`, dadosEnviados);
   console.log('JSON enviado no corpo da requisição:', JSON.stringify(dadosEnviados));
 
   // 4) chamar API e tratar resposta
   try {
-    const dados = await postUsuario(dadosEnviados);
-    console.log('📬 Retorno do servidor:', dados);
-    showAlert(`Usuário(a) ${nome} cadastrado(a) com sucesso!`);
+    let dados;
+    let mensagemSucesso;
+    
+    if (userId) {
+      dados = await atualizarUsuario(userId, dadosEnviados);
+      mensagemSucesso = `Usuário(a) ${nome} atualizado(a) com sucesso!`;
+    }
+    else {
+      // MODO INCLUSÃO: Chama a API de Criação (POST)
+      // A função postUsuario deve ter sido importada/definida
+      dados = await postUsuario(dadosEnviados);
+      mensagemSucesso = `Usuário(a) ${nome} cadastrado(a) com sucesso!`;
+      limparFormulario(); // Limpa o formulário após inclusão
+    }
+    console.log(`📬 Retorno do servidor (${acao}):`, dados);
+    
+    await showAlert(mensagemSucesso);
+    await showAlert(mensagemSucesso);
+    window.location.href = "../../../index.html";
+    //await showConfirm(mensagemSucesso);
+    //redireciona para a pagina de pesquisa
+    //window.location.href = "../../../index.html";
     //showAlert("Inclusão realizada com sucesso!");
     //alert(`Usuário(a) ${nome} cadastrado(a) com sucesso!`);
     limparFormulario();
   } catch (erro) {
-    console.error('Erro na requisição:', erro);
+    console.error(`Erro na requisição de ${acao}:`, erro);
     alert(`Erro: ${erro.message || 'Falha ao conectar com o servidor.'}`);
   }
 }

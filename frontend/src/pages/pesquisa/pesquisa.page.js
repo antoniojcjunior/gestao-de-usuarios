@@ -31,7 +31,6 @@ document.addEventListener('click', (e) => {
 });
 }
 
-
 //chama o get usuários e depois o renderUsuarios para montar a tela
 export async function executarPesquisa() {
 
