@@ -160,6 +160,7 @@ export async function atualizarUsuario(id, usuario) {
     
     if (!resposta.ok) {
       const erro = await resposta.json().catch(() => ({}));
+      //console.log('Mensagem erro do back: ', erro.error);
       // Trata erros 400, 404, 500, etc.
       throw new Error(erro.error || 'Falha na atualização do usuário.');
     }
@@ -177,7 +178,7 @@ export async function atualizarUsuario(id, usuario) {
     return true; 
 
   } catch (err) {
-    console.error('Erro em atualizarUsuario:', err);
+    console.log('Erro em atualizar Usuario:', err);
     throw err; // Permite que o caller trate o erro e exiba a mensagem
   }
 }

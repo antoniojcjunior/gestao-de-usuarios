@@ -59,7 +59,7 @@ export async function processarFormularioUsuario(userId) {
       
       // 🔹 NOVO: diferencia "sem alteração" x "update de fato"
       if (dados && dados.mensagem) {
-        // Caso 1: BACK DISSE QUE NADA MUDOU
+        // Caso 1: NADA MUDOU NO BACK
         // Ex.: { mensagem: 'Nenhuma alteração detectada...', camposAlterados: [] }
         await showAlert(dados.mensagem); // mantém na tela de edição, sem redirect
       } else {
@@ -94,6 +94,7 @@ export async function processarFormularioUsuario(userId) {
     //limparFormulario();
   } catch (erro) {
     console.log(`Erro na requisição de ${acao}:`, erro);
+    await showAlert(erro.message);
     //alert(`Erro: ${erro.message || 'Falha ao conectar com o servidor.'}`);
   }
 }
