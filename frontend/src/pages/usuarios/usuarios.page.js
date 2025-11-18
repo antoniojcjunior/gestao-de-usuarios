@@ -55,9 +55,19 @@ export async function processarFormularioUsuario(userId) {
     
     if (userId) {
       dados = await atualizarUsuario(userId, dadosEnviados);
-      mensagemSucesso = `Usuário(a) ${nome} atualizado(a) com sucesso!`;
-      await showAlert(mensagemSucesso);
-      window.location.href = "../../../index.html";
+      console.log('TESTE 02 retorno back: ', dados);//era só pra testar, mostrou a log certinha
+      
+      // 🔹 NOVO: diferencia "sem alteração" x "update de fato"
+      if (dados && dados.mensagem) {
+        // Caso 1: BACK DISSE QUE NADA MUDOU
+        // Ex.: { mensagem: 'Nenhuma alteração detectada...', camposAlterados: [] }
+        await showAlert(dados.mensagem); // mantém na tela de edição, sem redirect
+      } else {
+        // Caso 2: UPDATE REALIZADO (veio objeto de usuário ou true)
+        mensagemSucesso = `Usuário(a) ${nome} atualizado(a) com sucesso!`;
+        await showAlert(mensagemSucesso);
+        window.location.href = "../../../index.html"; // redireciona p/ pesquisa
+      }
     }
     else {
       // MODO INCLUSÃO: Chama a API de Criação (POST)
@@ -65,6 +75,7 @@ export async function processarFormularioUsuario(userId) {
       try {
         dados = await postUsuario(dadosEnviados);
         mensagemSucesso = `Usuário(a) ${nome} cadastrado(a) com sucesso!`;
+        await showAlert(mensagemSucesso);
         limparFormulario(); // Limpa o formulário após inclusão
       }
       catch (error) {
@@ -74,9 +85,6 @@ export async function processarFormularioUsuario(userId) {
       }
     }
     console.log(`📬 Retorno do servidor (${acao}):`, dados);
-    
-  
-    
     
     //await showConfirm(mensagemSucesso);
     //redireciona para a pagina de pesquisa

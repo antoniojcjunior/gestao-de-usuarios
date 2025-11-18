@@ -5,6 +5,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 
 import { normalizarDataNascimento } from './utils/ajusteDatas.js';
+import { comparaRegistros } from './utils/comparaRegistros.js';
 
 process.env.PGCLIENTENCODING = 'UTF8';
 
@@ -272,98 +273,154 @@ sql += ` ORDER BY usr.nome ASC`;
 
 // atualizar usuários
 app.put('/api/usuarios/:id', async (req, res) => {
-    try {
-        const { id } = req.params; // Captura o ID da URL
-        const usuarioId = Number(id);
+  // deixar visíveis no catch
+  let usuarioId;
+  let cpfLimpo;  
+  try {
+      const { id } = req.params; // Captura o ID da URL
+      usuarioId = Number(id);
 
-        if (isNaN(usuarioId) || usuarioId <= 0) {
-            return res.status(400).json({ error: 'ID de usuário inválido para atualização.' });
-        }
+      if (isNaN(usuarioId) || usuarioId <= 0) {
+          return res.status(400).json({ error: 'ID de usuário inválido para atualização.' });
+      }
 
-        const { nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao } = req.body;
-        const cpfLimpo = String(cpf || '').replace(/\D/g, '');
-        const dataNormalizada = normalizarDataNascimento(data_nascimento);
-        const setorIdNum = Number(setor_id);
-        const regiaoIdNum = Number(regiao_id);
-        const turnoIdNum = Number(turno_id);
+      const { nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao } = req.body;
+      //const cpfLimpo = String(cpf || '').replace(/\D/g, '');
+      cpfLimpo = String(cpf || '').replace(/\D/g, ''); //usa variável externa
+      //const dataNormalizada = normalizarDataNascimento(data_nascimento); já está sendo normalizada antes de ir pro banco (via comparaRegistros).
+      const setorIdNum = Number(setor_id);
+      const regiaoIdNum = Number(regiao_id);
+      const turnoIdNum = Number(turno_id);
 
-        //console.log(`Dados do front para o back (PUT ID: ${usuarioId}):`, req.body);
+      //console.log(`Dados do front para o back (PUT ID: ${usuarioId}):`, req.body);
 
-        // --- VALIDAÇÕES (Reutilizadas do POST) ---
-        if (!nome?.trim()) {
-            return res.status(400).json({ error: 'Nome é obrigatório.' });
-        }
+      // --- VALIDAÇÕES (Reutilizadas do POST) ---
+      if (!nome?.trim()) {
+          return res.status(400).json({ error: 'Nome é obrigatório.' });
+      }
 
-        if (cpfLimpo.length !== 11) {
-            return res.status(400).json({ error: 'CPF inválido: informe 11 dígitos.' });
-        }
+      if (cpfLimpo.length !== 11) {
+          return res.status(400).json({ error: 'CPF inválido: informe 11 dígitos.' });
+      }
 
-        if (!Number.isInteger(setorIdNum) || setorIdNum <= 0) {
-            return res.status(400).json({ error: 'setor_id inválido.' });
-        }
+      if (!Number.isInteger(setorIdNum) || setorIdNum <= 0) {
+          return res.status(400).json({ error: 'setor_id inválido.' });
+      }
 
-        if (!Number.isInteger(regiaoIdNum) || regiaoIdNum <= 0) {
-            return res.status(400).json({ error: 'regiao_id inválido.' });
-        }
+      if (!Number.isInteger(regiaoIdNum) || regiaoIdNum <= 0) {
+          return res.status(400).json({ error: 'regiao_id inválido.' });
+      }
 
-        if (!Number.isInteger(turnoIdNum) || turnoIdNum <= 0) {
-            return res.status(400).json({ error: 'turno_id inválido.' });
-        }
+      if (!Number.isInteger(turnoIdNum) || turnoIdNum <= 0) {
+          return res.status(400).json({ error: 'turno_id inválido.' });
+      }
 
-        // Converte remuneração
-        const remunNumerica = Number(String(remuneracao).replace(/[R$\s.]/g, '').replace(',', '.'));
-        
-        if (isNaN(remunNumerica)) {
-            return res.status(400).json({ error: 'Remuneração inválida.' });
-        }
-        // --- Fim das Validações ---
+      // Converte remuneração
+      const remunNumerica = Number(String(remuneracao).replace(/[R$\s.]/g, '').replace(',', '.'));
+      
+      if (isNaN(remunNumerica)) {
+          return res.status(400).json({ error: 'Remuneração inválida.' });
+      }
+      // --- Fim das Validações ---
+      
+      //buscar dados completos do usuário para comparação
+      const { rows: rowsUsuario } = await pool.query(
+          `
+          SELECT nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao
+            FROM usuarios
+            WHERE id = $1
+          `,
+          [usuarioId]
+      );
 
-        // Verifica se o usuário existe antes de tentar atualizar
-        const checkExists = await pool.query('SELECT 1 FROM usuarios WHERE id = $1', [usuarioId]);
-        if (checkExists.rows.length === 0) {
-            return res.status(404).json({ error: 'Usuário não encontrado.' });
-        }
+      if (rowsUsuario.length === 0) {
+          return res.status(404).json({ error: 'Usuário não encontrado.' });
+      }
 
-        // Comando SQL para UPDATE
-        const { rows } = await pool.query(
-            `
-            UPDATE usuarios 
-            SET nome = $1, cpf = $2, setor_id = $3, regiao_id = $4, turno_id = $5, data_nascimento = $6, remuneracao = $7
-            WHERE id = $8
-            RETURNING id, nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao
-            `,
-            [nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, dataNormalizada, remunNumerica, usuarioId]
-        );
-        // Se a atualização foi bem-sucedida, retorna o registro atualizado.
-        return res.status(200).json(rows[0]); 
+      const usuarioAtual = rowsUsuario[0];
+      //console.log('usuario atual: ', usuarioAtual);
+      // console.log('parametros: ', nome,
+      //          cpf,
+      //          setor_id,
+      //          regiao_id,
+      //          turno_id,
+      //          data_nascimento,
+      //          remunNumerica,);
+      //comparação entre o registro atual e o que veio do front
+      const { mesmosDados, camposAlterados, novo } = comparaRegistros(
+          usuarioAtual,
+          {
+              nome,
+              cpf,
+              setor_id,
+              regiao_id,
+              turno_id,
+              data_nascimento,
+              remuneracao: remunNumerica,
+          }
+      );
 
-    } catch (err) {
-        // --- TRATAMENTO INTELIGENTE DE ERROS ---
-        
-        // 23505 = unique_violation no Postgres (CPF duplicado)
-        if (err.code === '23505') {
-            // Verifica se o CPF está em uso por OUTRO usuário (excluindo o ID atual da busca)
-            const exists = await pool.query(
-                'SELECT id FROM usuarios WHERE cpf = $1 AND id <> $2', 
-                [cpfLimpo, usuarioId]
-            );
+      //console.log('mesmos dados: ', mesmosDados);
+      if (mesmosDados) {
+          // nada mudou → não faz UPDATE
+          //console.log('mesmos dados: ', mesmosDados);
+          return res.status(200).json({
+              mensagem: 'Nenhuma alteração encontrada.',
+              camposAlterados // aqui virá [] só para manter o padrão
+          });
+      }
 
-            if (exists.rows.length > 0) {
-                // O CPF está em uso por outro usuário, retorna o erro 409
-                return res.status(409).json({ error: 'CPF já cadastrado para outro usuário.' });
-            }
-            
-            // Se o CPF pertence ao PRÓPRIO usuário (o que está sendo editado),
-            // isso é permitido. O erro 23505 nesse caso não deveria ocorrer se o update
-            // for bem-sucedido. Se cair aqui, é um erro de duplicidade legítimo.
-        }
+      // 🔹 NOVO: usar os dados normalizados pela comparaRegistros no UPDATE
+      const usuarioNovo = novo;
 
-        // 23503 = foreign_key_violation
-        if (err.code === '23503') return res.status(400).json({ error: 'Chave estrangeira inválida (Setor, Região ou Turno).' });   
-        
-        console.error(err);
-        return res.status(500).json({ error: 'Erro ao atualizar usuário.' });
-    }
+      // Comando SQL para UPDATE
+      const { rows } = await pool.query(
+          `
+          UPDATE usuarios 
+          SET nome = $1, cpf = $2, setor_id = $3, regiao_id = $4, turno_id = $5, data_nascimento = $6, remuneracao = $7
+          WHERE id = $8
+          RETURNING id, nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao
+          `,
+          [
+                usuarioNovo.nome,           
+                usuarioNovo.cpf,            
+                usuarioNovo.setor_id,       
+                usuarioNovo.regiao_id,      
+                usuarioNovo.turno_id,       
+                usuarioNovo.data_nascimento,
+                usuarioNovo.remuneracao,    
+                usuarioId
+            ]
+          //[nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, dataNormalizada, remunNumerica, usuarioId]
+      );
+      // Se a atualização foi bem-sucedida, retorna o registro atualizado.
+      return res.status(200).json(rows[0]); 
+
+  } catch (err) {
+      // --- TRATAMENTO DE ERROS ---
+      
+      // 23505 = unique_violation no Postgres (CPF duplicado)
+      if (err.code === '23505') {
+          // Verifica se o CPF está em uso por OUTRO usuário (excluindo o ID atual da busca)
+          const exists = await pool.query(
+              'SELECT id FROM usuarios WHERE cpf = $1 AND id <> $2', 
+              [cpfLimpo, usuarioId]
+          );
+
+          if (exists.rows.length > 0) {
+              // O CPF está em uso por outro usuário, retorna o erro 409
+              return res.status(409).json({ error: 'CPF já cadastrado para outro usuário.' });
+          }
+          // Se o CPF pertence ao PRÓPRIO usuário (o que está sendo editado),
+          // isso é permitido. O erro 23505 nesse caso não deveria ocorrer se o update
+      }
+
+      // 23503 = foreign_key_violation
+      if (err.code === '23503') return res.status(400).json({ error: 'Chave estrangeira inválida (Setor, Região ou Turno).' });   
+      
+      console.error(err);
+      return res.status(500).json({ error: 'Erro ao atualizar usuário.' });
+  }
 });
 
 // rota para listar setores

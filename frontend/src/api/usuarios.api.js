@@ -157,7 +157,7 @@ export async function atualizarUsuario(id, usuario) {
       // Converte o objeto JavaScript em uma string JSON para o corpo da requisição
       body: JSON.stringify(usuario) 
     });
-
+    
     if (!resposta.ok) {
       const erro = await resposta.json().catch(() => ({}));
       // Trata erros 400, 404, 500, etc.
@@ -168,7 +168,9 @@ export async function atualizarUsuario(id, usuario) {
     // Se o backend retornar 204, a chamada 'await resposta.json()' pode falhar.
     // Para simplificar, assumimos que o backend pode retornar 200 com o objeto atualizado.
     if (resposta.status === 200) {
-        return await resposta.json();
+        const dados = await resposta.json();
+        //console.log('TESTE Mensagem do back: ', dados.mensagem);
+        return dados;
     }
     
     // Retorna true em caso de sucesso sem corpo (204 No Content)
