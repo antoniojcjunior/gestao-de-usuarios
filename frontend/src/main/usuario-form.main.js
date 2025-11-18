@@ -1,9 +1,8 @@
 import { processarFormularioUsuario } from '../pages/usuarios/usuarios.page.js';
 import { preencherUFs } from '../utils/localizacao.util.js';
-import { aplicarMascaraCPF } from '../utils/util.util.js';
 import { carregarSelect, selectFilter } from '../utils/carregar-select.util.js';
 import { ajustarCampoDataParaMobile } from '../utils/data-mobile.util.js';
-import { aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from '../utils/util.util.js';
+import { aplicarMascaraCPF, aplicarMascaraMonetaria, limitaDataNascimento, limparFormulario } from '../utils/util.util.js';
 import { getUsuarioPorId } from '../api/usuarios.api.js';
 
 
@@ -87,6 +86,7 @@ if (userId) {
     // 5) Preencher os campos do formulário
     document.getElementById('nome').value = usuario.nome || '';
     document.getElementById('cpf').value  = usuario.cpf  || '';
+    aplicarMascaraCPF();
     //document.getElementById('setor').value  = usuario.setor_id  || '';
     document.getElementById('regiao').value = usuario.regiao_id || '';
     document.getElementById('turno').value  = usuario.turno_id  || '';
@@ -106,7 +106,7 @@ if (userId) {
     }
 
     document.getElementById('remuneracao').value = usuario.remuneracao || '';
-
+    aplicarMascaraMonetaria(); //mascara aplicada após a montagem da tela de atualização
   } catch (erro) {
     console.error('Falha ao carregar dados do usuário:', erro);
     alert('Erro ao carregar dados do usuário.');

@@ -56,27 +56,36 @@ export async function processarFormularioUsuario(userId) {
     if (userId) {
       dados = await atualizarUsuario(userId, dadosEnviados);
       mensagemSucesso = `Usuário(a) ${nome} atualizado(a) com sucesso!`;
+      await showAlert(mensagemSucesso);
+      window.location.href = "../../../index.html";
     }
     else {
       // MODO INCLUSÃO: Chama a API de Criação (POST)
       // A função postUsuario deve ter sido importada/definida
-      dados = await postUsuario(dadosEnviados);
-      mensagemSucesso = `Usuário(a) ${nome} cadastrado(a) com sucesso!`;
-      limparFormulario(); // Limpa o formulário após inclusão
+      try {
+        dados = await postUsuario(dadosEnviados);
+        mensagemSucesso = `Usuário(a) ${nome} cadastrado(a) com sucesso!`;
+        limparFormulario(); // Limpa o formulário após inclusão
+      }
+      catch (error) {
+        // ERRO: O formulário NÃO é limpo. A lógica de erro é tratada aqui.
+        console.log('Falha no cadastro:', error);
+        throw error;
+      }
     }
     console.log(`📬 Retorno do servidor (${acao}):`, dados);
     
-    await showAlert(mensagemSucesso);
-    await showAlert(mensagemSucesso);
-    window.location.href = "../../../index.html";
+  
+    
+    
     //await showConfirm(mensagemSucesso);
     //redireciona para a pagina de pesquisa
     //window.location.href = "../../../index.html";
     //showAlert("Inclusão realizada com sucesso!");
     //alert(`Usuário(a) ${nome} cadastrado(a) com sucesso!`);
-    limparFormulario();
+    //limparFormulario();
   } catch (erro) {
-    console.error(`Erro na requisição de ${acao}:`, erro);
-    alert(`Erro: ${erro.message || 'Falha ao conectar com o servidor.'}`);
+    console.log(`Erro na requisição de ${acao}:`, erro);
+    //alert(`Erro: ${erro.message || 'Falha ao conectar com o servidor.'}`);
   }
 }

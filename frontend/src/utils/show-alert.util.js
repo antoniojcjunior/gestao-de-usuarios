@@ -19,6 +19,17 @@ export function showAlert(message) {
     const confirmationModal = new window.bootstrap.Modal(modalElement);
     
     return new Promise(resolve => {
+        
+        modalElement.addEventListener('shown.bs.modal', function onShown() {
+        const focoBotaoOk = document.getElementById('alertOkButton');
+        if (focoBotaoOk) {
+            // APLICA O FOCO com segurança, após o Bootstrap ter terminado de renderizar.
+            focoBotaoOk.focus();
+        }
+        // Remove o listener para não acumular
+        modalElement.removeEventListener('shown.bs.modal', onShown);
+        });
+        
         // Exibe o modal
         confirmationModal.show();
 
@@ -27,18 +38,6 @@ export function showAlert(message) {
             confirmationModal.hide(); // Esconde o modal
             resolve(true); // Resolve a Promise com TRUE (Confirmado)
         };
-
-        
-        //confirmNoButton.onclick = handleCancel;
-        // Garante que o clique fora do modal também conte como Cancelar
-        modalElement.addEventListener('hidden.bs.modal', function onHidden() {
-            // Só resolve se o modal foi fechado e a Promise ainda não foi resolvida (pelo 'Sim')
-            if (resolve) {
-                resolve(false); 
-            }
-            // Remove o listener para evitar múltiplas chamadas
-            modalElement.removeEventListener('hidden.bs.modal', onHidden);
-        });
     });
 }
 
@@ -55,6 +54,16 @@ export function showConfirm(message) {
     const confirmationModal = new window.bootstrap.Modal(modalElement);
     
     return new Promise(resolve => {
+       
+        modalElement.addEventListener('shown.bs.modal', function onShown() {
+        const focoBotaoYes = document.getElementById('confirmYesButton');
+        if (focoBotaoYes) {
+            // APLICA O FOCO com segurança, após o Bootstrap ter terminado de renderizar.
+            focoBotaoYes.focus();
+        }
+        // Remove o listener para não acumular
+        modalElement.removeEventListener('shown.bs.modal', onShown);
+        });
         // Exibe o modal
         confirmationModal.show();
 

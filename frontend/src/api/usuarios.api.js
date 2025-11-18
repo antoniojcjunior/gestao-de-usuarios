@@ -1,6 +1,7 @@
 // apenas as chamadas ao back
 
 import { API_BASE } from '../config.js';
+import { showAlert } from '../utils/show-alert.util.js';
 
 //Incluir usuário
 export async function postUsuario(dadosEnviados) {
@@ -15,6 +16,8 @@ export async function postUsuario(dadosEnviados) {
 
   if (!resposta.ok) {
     const msg = dados?.error || `Erro HTTP ${resposta.status}`;
+    //console.log('Erro CPF duplicado:', msg);
+    await showAlert(msg);
     throw new Error(msg);
   }
   return dados; // sucesso

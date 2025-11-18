@@ -29,7 +29,7 @@ app.post('/api/usuarios', async (req, res) => {
     const regiaoIdNum = Number(regiao_id);
     const turnoIdNum = Number(turno_id);
 
-    console.log("Dados do front para o back:", req.body); //mostra quais campos estão chegando do front para o back
+    //console.log("Dados do front para o back:", req.body); //mostra quais campos estão chegando do front para o back
 
     /*if (!nome || nome.trim() === '') { nome vazio OU nome em branco entra no IF e retorna erro
     return res.status(400).json({ error: 'Nome é obrigatório.' });
@@ -57,7 +57,6 @@ app.post('/api/usuarios', async (req, res) => {
 
     // converte "R$ 5.145,88" → 5145.88
     const remunNumerica = Number(String(remuneracao).replace(/[R$\s.]/g, '').replace(',', '.'));
-
     if (isNaN(remunNumerica)) {
       return res.status(400).json({ error: 'Remuneração inválida.' });
     }
@@ -288,7 +287,7 @@ app.put('/api/usuarios/:id', async (req, res) => {
         const regiaoIdNum = Number(regiao_id);
         const turnoIdNum = Number(turno_id);
 
-        console.log(`Dados do front para o back (PUT ID: ${usuarioId}):`, req.body);
+        //console.log(`Dados do front para o back (PUT ID: ${usuarioId}):`, req.body);
 
         // --- VALIDAÇÕES (Reutilizadas do POST) ---
         if (!nome?.trim()) {
@@ -313,7 +312,7 @@ app.put('/api/usuarios/:id', async (req, res) => {
 
         // Converte remuneração
         const remunNumerica = Number(String(remuneracao).replace(/[R$\s.]/g, '').replace(',', '.'));
-
+        
         if (isNaN(remunNumerica)) {
             return res.status(400).json({ error: 'Remuneração inválida.' });
         }
@@ -333,9 +332,8 @@ app.put('/api/usuarios/:id', async (req, res) => {
             WHERE id = $8
             RETURNING id, nome, cpf, setor_id, regiao_id, turno_id, data_nascimento, remuneracao
             `,
-            [nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, dataNormalizada, remuneracao, usuarioId]
+            [nome.trim(), cpfLimpo, setorIdNum, regiaoIdNum, turnoIdNum, dataNormalizada, remunNumerica, usuarioId]
         );
-        console.log(remuneracao);
         // Se a atualização foi bem-sucedida, retorna o registro atualizado.
         return res.status(200).json(rows[0]); 
 

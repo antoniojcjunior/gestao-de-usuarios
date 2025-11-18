@@ -37,13 +37,12 @@ export function limparFormulario() {
 });
 }
 //Aplica mascara nos input de CPF
-export function aplicarMascaraCPF() {
-  const input = document.getElementById('cpf');
+export function aplicarMascaraCPF(elementId = 'cpf') {
+  const input = document.getElementById(elementId);
   if (!input) return;
 
-  // Máscara durante a digitação
-  input.addEventListener('input', (e) => {
-    let v = e.target.value.replace(/\D/g, '');
+    const formatarCPF = (valor) => {
+    let v = valor.replace(/\D/g, '');
 
     if (v.length > 11) v = v.slice(0, 11);
 
@@ -54,8 +53,16 @@ export function aplicarMascaraCPF() {
     } else if (v.length > 3) {
       v = v.replace(/^(\d{3})(\d{0,3})/, '$1.$2');
     }
+    return v;
+  };
 
-    e.target.value = v;
+  // 1. 📍 Aplica a máscara no valor INICIAL (ao carregar o formulário)
+  // Isso faz o CPF aparecer como 123.456.789-01 na tela.
+  input.value = formatarCPF(input.value); 
+
+  // 2. Máscara durante a digitação
+  input.addEventListener('input', (e) => {
+    e.target.value = formatarCPF(e.target.value);
   });
 
   // Remove formatação ao sair do campo (onblur)
