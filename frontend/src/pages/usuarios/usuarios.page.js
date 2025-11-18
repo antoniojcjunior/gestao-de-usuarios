@@ -55,7 +55,7 @@ export async function processarFormularioUsuario(userId) {
     
     if (userId) {
       dados = await atualizarUsuario(userId, dadosEnviados);
-      console.log('TESTE 02 retorno back: ', dados);//era só pra testar, mostrou a log certinha
+      console.log('TESTE 02 retorno back: ', dados);
       
       // 🔹 NOVO: diferencia "sem alteração" x "update de fato"
       if (dados && dados.mensagem) {
